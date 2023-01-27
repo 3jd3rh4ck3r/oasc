@@ -1,6 +1,6 @@
 <h1>OASC</h1>
 
-OpenAI Security Console - Python3 AI-driven Penetration Test Framework
+OpenAI Security Console - Python3 AI-driven Pen Testing Framework
 
 <img src="banner.png" width="100%"/>
  
