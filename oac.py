@@ -6,7 +6,7 @@ __version__ = "0.0.1"
 
 """----------------------------------------------------------------"""
 # MODULE IMPORTS
-import random, os
+import random, os, openai
 from os import environ
 """----------------------------------------------------------------"""
 # THIRD PARTY MODULE REQUIREMENT CHECK
@@ -27,8 +27,8 @@ MAX_TOKENS = 2048
 
 # FUNCTION TO SET OPEN AI API KEY AS ENVIRONMENT VARIABLE
 def setEnvKey():
-    token = input("[OpenAI API Key]╼> ")
-    os.system("export OPENAI_API_KEY='"+token+"'")
+    api_key = input("[OpenAI API Key]╼> ")
+    openai.api_key = api_key
 
 # FUNCTION TO LIST AND SET AVAILABLE ENGINES, TEMPERATURE, MAX_TOKENS
 def setFinetuning():
@@ -108,4 +108,5 @@ def banner():
 
 if __name__ == "__main__":
     banner()
+    setEnvKey()
     openaiConsole()
