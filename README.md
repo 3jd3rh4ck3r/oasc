@@ -1,6 +1,6 @@
-<h1>OAC</h1>
+<h1>OASC</h1>
 
-OpenAI Console - Python3 CLI Framework for OpenAI
+OpenAI Security Console - Python3 AI-driven Penetration Test Framework
 
 <img src="banner.png" width="100%"/>
  
@@ -9,4 +9,4 @@ OpenAI Console - Python3 CLI Framework for OpenAI
 
  create an <a href="https://beta.openai.com/account/api-keys">openAI API KEY</a> and paste it into the script!
          
-         python3 oac.py
+         python3 oasc.py
