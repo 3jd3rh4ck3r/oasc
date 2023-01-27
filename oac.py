@@ -18,13 +18,11 @@ except ModuleNotFoundError:
     import openai
 """----------------------------------------------------------------"""
 # GLOBAL VARIABLES
-openai.api_key = ""
+openai.api_key = "[PUT YOUR API KEY HERE]"
 ENGINE = "text-davinci-002"
 TEMPERATURE = 0
 MAX_TOKENS = 2048
 """----------------------------------------------------------------"""
-
-
 
 
 # FUNCTION TO SET OPEN AI API KEY AS ENVIRONMENT VARIABLE
@@ -53,6 +51,7 @@ def openaiConsole():
             setEnvKey()
         elif interact == "help":
             print("\nCOMMANDS\tDESCRIPTION\n")
+            print("banner\t\tprint banner")
             print("set api-key\tsave your OpenAI API key as environment variable")
             print("fine-tuning\tlaunch configuration menu for fine-tuning")
             print("exit\t\tquit oac\n")
