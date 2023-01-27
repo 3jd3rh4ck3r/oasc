@@ -1,7 +1,7 @@
 """-------------------------------------------------------------------
 # OAC- OpenAI Console
 -------------------------------------------------------------------"""
-__author__ = "z0nd3rl1ng" + "[CO-AUTHOR]"
+__author__ = "z0nd3rl1ng" + "0xAsFi"
 __version__ = "0.0.1"
 
 """----------------------------------------------------------------"""
@@ -18,7 +18,7 @@ except ModuleNotFoundError:
     import openai
 """----------------------------------------------------------------"""
 # GLOBAL VARIABLES
-openai.api_key = "[PUT YOUR API KEY HERE]"
+openai.api_key = ""
 ENGINE = "text-davinci-002"
 TEMPERATURE = 0
 MAX_TOKENS = 2048
@@ -32,7 +32,7 @@ def setEnvKey():
     token = input("[OpenAI API Key]╼> ")
     os.system("export OPENAI_API_KEY='"+token+"'")
 
-# FUNCTION TO LIST AND SET AVAILABLE ENGINES
+# FUNCTION TO LIST AND SET AVAILABLE ENGINES, TEMPERATURE, MAX_TOKENS
 def setFinetuning():
     engineslist = openai.Engine.list()
     for ids in engineslist.data:
@@ -40,8 +40,9 @@ def setFinetuning():
     ENGINE = input("[Select Engine]╼> ") # SET ENGINE
     TEMPERATURE = float(input("[Set Temperature]╼> ")) # SET TEMPERATURE
     MAX_TOKENS = int(input("[Set Max Tokens]╼> ")) # SET MAX_TOKENS
-      
-def shellGPT():
+
+# FUNCTION FOR THE OPENAI QUERY PROMPT
+def openaiConsole():
     while True:
         interact = input("[OAC]╼> ")
         if interact == "exit":
@@ -55,6 +56,8 @@ def shellGPT():
             print("set api-key\tsave your OpenAI API key as environment variable")
             print("fine-tuning\tlaunch configuration menu for fine-tuning")
             print("exit\t\tquit oac\n")
+        elif interact == "banner":
+            banner()
         else:
             response = openai.Completion.create(
                 engine=ENGINE,
@@ -102,8 +105,8 @@ def banner():
 		if charset < 2: final.append('\n   ')
 
 	print(f"   {''.join(final)}")
-	print(f'{padding} by z0nd3rl1ng\n')
+	print(f'{padding}by z0nd3rl1ng & \n       0xAsFi\n')
 
 if __name__ == "__main__":
     banner()
-    shellGPT()
+    openaiConsole()
