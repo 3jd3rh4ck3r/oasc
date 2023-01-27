@@ -8,11 +8,12 @@ __version__ = "0.0.1"
 # MODULE IMPORTS
 import random, os
 from os import environ
-"""----------------------------------------------------------------"""
-# THIRD PARTY MODULE REQUIREMENT CHECK
+# THIRD PARTY REQUIREMENT CHECK
 try:
+    # TRY TO IMPORT OPENAI
     import openai
 except ModuleNotFoundError:
+    # IF ERROR PIP INSTALL OPENAI + IMPORT
     print("[*] install missing module: openai")
     os.system("pip3 install openai")
     import openai
@@ -36,26 +37,32 @@ def setFinetuning():
     ENGINE = input("[Select Engine]╼> ") # SET ENGINE
     TEMPERATURE = float(input("[Set Temperature]╼> ")) # SET TEMPERATURE
     MAX_TOKENS = int(input("[Set Max Tokens]╼> ")) # SET MAX_TOKENS
+    
+# FUNCTION TO LIST HELP MENU - COULD BE SWAGGED UP ;)
+def help():
+    print("\nCOMMANDS\tDESCRIPTION\n")
+    print("banner\t\tprint banner")
+    print("api-key\t\texport OpenAI API-Key to environment")
+    print("fine-tuning\tconfiguration menu for fine-tuning queries")
+    print("exit\t\tquit oasc\n")
 
-# FUNCTION FOR THE OPENAI QUERY PROMPT
+# FUNCTION FOR THE OPENAI QUERY PROMPT (CORE-SYSTEM)
 def openaiSecurityConsole():
     while True:
         interact = input("[OASC]╼> ")
+        # SYSTEM COMMAND HANDLER 
         if interact == "exit":
             exit()
         elif interact == "fine-tuning":
             setFinetuning()
-        elif interact == "set api-key":
+        elif interact == "api-key":
             setEnvKey()
         elif interact == "help":
-            print("\nCOMMANDS\tDESCRIPTION\n")
-            print("banner\t\tprint banner")
-            print("set api-key\texport OpenAI API-Key to environment")
-            print("fine-tuning\tconfiguration menu for fine-tuning queries")
-            print("exit\t\tquit oasc\n")
+            help()
         elif interact == "banner":
             banner()
         else:
+            # ACTUAL OPENAI REQUEST - COULD BE OUTSOURCED AS FUNCTION
             response = openai.Completion.create(
                 engine=ENGINE,
                 prompt=(f"{interact}"),
@@ -65,7 +72,9 @@ def openaiSecurityConsole():
             )
             response = response["choices"][0]["text"]
             print(response)
-            
+
+# FUNCTION FOR A CALLABLE BANNER
+# TBH GOOGLED THIS SOMEHOW TOGETHER BUT I RLY LIKE THE GRADIENT SO I MOSTLY USE IT <3
 def banner():
 	padding = '  '
 	O = [[' ','┌','─','┐'],
@@ -77,9 +86,9 @@ def banner():
 	S = [[' ','┌','─','┐'],
 	     [' ','└','─','┐'],
 	     [' ','└','─','┘']]
-	C = [[' ','┌','─','─'],
+	C = [[' ','┌','─','┐'],
 	     [' ','│',' ',' '],
-	     [' ','└','─','─']]
+	     [' ','└','─','┘']]
 	
 	banner = [O,A,S,C]
 	final = []
@@ -107,6 +116,7 @@ def banner():
 	print(f"   {''.join(final)}")
 	print(f'{padding}  by z0nd3rl1ng & \n\t 0xAsFi\n')
 
+# MAIN FUNCTION (ENTRY-POINT)
 if __name__ == "__main__":
     banner()
     openaiSecurityConsole()
