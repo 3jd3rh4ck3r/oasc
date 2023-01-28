@@ -12,6 +12,7 @@ OpenAI Security Console - Python3 AI-driven Pen Testing Framework
         <li>add content-creator (backdoors, phishing-sites)?</li>
         <li>should we change fine-tuning into category types<br>
         with preset values instead of setting each variable?</li>
+        <br>
         <li>OSINT</li>
         <li>Payload generator</li>
         <li>Social E. + deep fake</li>
