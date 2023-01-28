@@ -26,7 +26,6 @@ OpenAI Security Console - Python3 AI-driven Pen Testing Framework
         <li><a href="https://openai.com/blog/jukebox/">Jukebox</a></li>
         <li><a href="https://intelx.io/">IntelX</a></li>
         <li><a href="https://www.dehashed.com/">Dehashed</a></li>
-        
     </ul>
 </h3>
  <!--<h3>GET STARTED</h3>
