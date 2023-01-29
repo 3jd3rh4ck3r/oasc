@@ -2,9 +2,11 @@
 
 OpenAI Security Console - Python3 AI-driven Pen Testing Framework
 
-<h2>ATLASSIAN KANBAN BOARD&nbsp;
-<a href="https://z0nd3rl1ng.atlassian.net/jira/software/c/projects/OASC/boards/1?selectedIssue=OASC-1&atlOrigin=eyJpIjoiNjEzZTVmMTRhOWM5NDFlMGE4Yjc3NGE4MDIwNGI1NDUiLCJwIjoiaiJ9">📋</a>
-</h2>
+<h2>Project Management</h2>
+<h3><a href="https://z0nd3rl1ng.atlassian.net/jira/software/c/projects/OASC/boards/1?selectedIssue=OASC-1&atlOrigin=eyJpIjoiNjEzZTVmMTRhOWM5NDFlMGE4Yjc3NGE4MDIwNGI1NDUiLCJwIjoiaiJ9">Atlassian Kanban Board 📋</a></h3>
+<<br>
+<img src="basicgit.png" witdth="100%"/>
+
 
  <!--<h3>GET STARTED</h3>
 
