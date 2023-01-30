@@ -37,11 +37,22 @@ def setFinetuning():
     ENGINE = input("[Select Engine]╼> ") # SET ENGINE
     TEMPERATURE = float(input("[Set Temperature]╼> ")) # SET TEMPERATURE
     MAX_TOKENS = int(input("[Set Max Tokens]╼> ")) # SET MAX_TOKENS
-    
+
+def content()
+    def analyzer():
+        print("analyze..")
+        
+    def creator():
+        print("create..")
+        
+    analyzer()
+    creator()
+ 
 # FUNCTION TO LIST HELP MENU - COULD BE SWAGGED UP ;)
 def help():
     print("\nCOMMANDS\tDESCRIPTION\n")
     print("banner\t\tprint banner")
+    print("content\t\tcall content menu")
     print("api-key\t\texport OpenAI API-Key to environment")
     print("fine-tuning\tconfiguration menu for fine-tuning queries")
     print("exit\t\tquit oasc\n")
@@ -53,6 +64,8 @@ def openaiSecurityConsole():
         # SYSTEM COMMAND HANDLER 
         if interact == "exit":
             exit()
+        elif interact == "content":
+            content()
         elif interact == "fine-tuning":
             setFinetuning()
         elif interact == "api-key":
