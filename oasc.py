@@ -37,11 +37,36 @@ def setFinetuning():
     ENGINE = input("[Select Engine]╼> ") # SET ENGINE
     TEMPERATURE = float(input("[Set Temperature]╼> ")) # SET TEMPERATURE
     MAX_TOKENS = int(input("[Set Max Tokens]╼> ")) # SET MAX_TOKENS
+<<<<<<< HEAD
   
+=======
+
+# FUNCTION TO LIST CONTENT MENU
+def content():
+    print("\nCONTENT MENU\n")
+    print("(1)Analyzer")
+    print("(2)Creator\n")
+        
+    def analyzer():
+        print("\nImplement file analyzer here\n")
+        
+    def creator():
+        print("\nImplement file creator here\n")
+    
+    mode = input("[Select Mode]╼> ")    
+    if mode == "1":
+        analyzer()
+    elif mode == "2":
+        creator()
+    else:
+        content()
+ 
+>>>>>>> OASC-4
 # FUNCTION TO LIST HELP MENU - COULD BE SWAGGED UP ;)
 def help():
     print("\nCOMMANDS\tDESCRIPTION\n")
     print("banner\t\tprint banner")
+    print("content\t\tcall content menu")
     print("api-key\t\texport OpenAI API-Key to environment")
     print("fine-tuning\tconfiguration menu for fine-tuning queries")
     print("exit\t\tquit oasc\n")
@@ -53,6 +78,8 @@ def openaiSecurityConsole():
         # SYSTEM COMMAND HANDLER 
         if interact == "exit":
             exit()
+        elif interact == "content":
+            content()
         elif interact == "fine-tuning":
             setFinetuning()
         elif interact == "api-key":
