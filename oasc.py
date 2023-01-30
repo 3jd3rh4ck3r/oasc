@@ -37,9 +37,6 @@ def setFinetuning():
     ENGINE = input("[Select Engine]╼> ") # SET ENGINE
     TEMPERATURE = float(input("[Set Temperature]╼> ")) # SET TEMPERATURE
     MAX_TOKENS = int(input("[Set Max Tokens]╼> ")) # SET MAX_TOKENS
-<<<<<<< HEAD
-  
-=======
 
 # FUNCTION TO LIST CONTENT MENU
 def content():
@@ -61,7 +58,6 @@ def content():
     else:
         content()
  
->>>>>>> OASC-4
 # FUNCTION TO LIST HELP MENU - COULD BE SWAGGED UP ;)
 def help():
     print("\nCOMMANDS\tDESCRIPTION\n")
