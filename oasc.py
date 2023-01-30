@@ -38,15 +38,25 @@ def setFinetuning():
     TEMPERATURE = float(input("[Set Temperature]╼> ")) # SET TEMPERATURE
     MAX_TOKENS = int(input("[Set Max Tokens]╼> ")) # SET MAX_TOKENS
 
-def content()
+# FUNCTION TO LIST CONTENT MENU
+def content():
+    print("\nCONTENT MENU\n")
+    print("(1)Analyzer")
+    print("(2)Creator\n")
+        
     def analyzer():
-        print("analyze..")
+        print("\nImplement file analyzer here\n")
         
     def creator():
-        print("create..")
-        
-    analyzer()
-    creator()
+        print("\nImplement file creator here\n")
+    
+    mode = input("[Select Mode]╼> ")    
+    if mode == "1":
+        analyzer()
+    elif mode == "2":
+        creator()
+    else:
+        content()
  
 # FUNCTION TO LIST HELP MENU - COULD BE SWAGGED UP ;)
 def help():
