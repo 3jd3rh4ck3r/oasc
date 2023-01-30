@@ -6,17 +6,20 @@ __version__ = "0.0.1"
 
 """----------------------------------------------------------------"""
 # MODULE IMPORTS
-import random, os
+import random, os, requests
 from os import environ
 # THIRD PARTY REQUIREMENT CHECK
 try:
     # TRY TO IMPORT OPENAI
     import openai
+    from bs4 import BeautifulSoup as bs
 except ModuleNotFoundError:
     # IF ERROR PIP INSTALL OPENAI + IMPORT
-    print("[*] install missing module: openai")
+    print("[*] install missing modules")
     os.system("pip3 install openai")
+    os.system("pip3 install beautifulsoup4")
     import openai
+    from bs4 import BeautifulSoup as bs
 """----------------------------------------------------------------"""
 # GLOBAL VARIABLES
 openai.api_key = "[PUT YOUR API KEY HERE]"
@@ -43,13 +46,28 @@ def content():
     print("\nCONTENT MENU\n")
     print("(1)Analyzer")
     print("(2)Creator\n")
-        
+  
+    def exportContent(data, path):
+        with open(path, "w") as file:
+            file.write(str(bs(data)))
+            
+    def importContent(path):   
+        with open(path, "r") as file:
+            content = file.readlines()
+        content = "".join(content)
+        prettyprompt = bs(content, "lxml")
+        return prettyprompt
+                 
     def analyzer():
-        print("\nImplement file analyzer here\n")
+        path = input("[File Path]╼> ")
+        prompt = importContent(path)
+        print(prompt) # IMPLEMENT OPENAI REQUEST HERE
         
     def creator():
-        print("\nImplement file creator here\n")
-    
+        data = "" # IMPLEMENT OPENAI REQUEST HERE
+        path = input("[File Path]╼> ")
+        exportContent(data, path)
+        
     mode = input("[Select Mode]╼> ")    
     if mode == "1":
         analyzer()
