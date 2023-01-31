@@ -45,6 +45,20 @@ def setFinetuning():
     TEMPERATURE = float(input("[Set Temperature]╼> ")) # SET TEMPERATURE
     MAX_TOKENS = int(input("[Set Max Tokens]╼> ")) # SET MAX_TOKENS
 
+# FUNCTION FOR OPENAI REQUEST (OUTSOURCED)
+def openaiRequest(type, interact):
+    if type == "console":
+        # ACTUAL OPENAI REQUEST - COULD BE OUTSOURCED AS FUNCTION
+        response = openai.Completion.create(
+            engine=ENGINE,
+            prompt=(f"{interact}"),
+            temperature=TEMPERATURE,
+            max_tokens=MAX_TOKENS,
+            stop=None
+        )
+        response = response["choices"][0]["text"]
+        return response
+
 # FUNCTION TO LIST CONTENT MENU
 def content():
     print("\nCONTENT MENU\n")
@@ -167,15 +181,8 @@ def openaiSecurityConsole():
         elif interact == "banner":
             banner()
         else:
-            # ACTUAL OPENAI REQUEST - COULD BE OUTSOURCED AS FUNCTION
-            response = openai.Completion.create(
-                engine=ENGINE,
-                prompt=(f"{interact}"),
-                temperature=TEMPERATURE,
-                max_tokens=MAX_TOKENS,
-                stop=None
-            )
-            response = response["choices"][0]["text"]
+            type = "console"
+            response = openaiRequest(type, interact)
             print(response)
 
 # FUNCTION FOR A CALLABLE BANNER
