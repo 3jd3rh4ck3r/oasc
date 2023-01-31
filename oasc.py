@@ -45,22 +45,24 @@ def setFinetuning():
     TEMPERATURE = float(input("[Set Temperature]╼> ")) # SET TEMPERATURE
     MAX_TOKENS = int(input("[Set Max Tokens]╼> ")) # SET MAX_TOKENS
 
+# FUNCTION TO EXPORT TO A FILE (OUTSOURCED)
+def exportContent(data, path):
+    with open(path, "w") as file:
+        file.write(str(bs(data)))
+
+# FUNCTION TO IMPORT FROM A FILE (OUTSOURCED)
+def importContent(path):
+    with open(path, "r") as file:
+        content = file.readlines()
+    content = "".join(content)
+    prettyprompt = bs(content, "lxml")
+    return prettyprompt
+
 # FUNCTION TO LIST CONTENT MENU
 def content():
     print("\nCONTENT MENU\n")
     print("(1)Analyzer")
     print("(2)Creator\n")
-  
-    def exportContent(data, path):
-        with open(path, "w") as file:
-            file.write(str(bs(data)))
-            
-    def importContent(path):   
-        with open(path, "r") as file:
-            content = file.readlines()
-        content = "".join(content)
-        prettyprompt = bs(content, "lxml")
-        return prettyprompt
                  
     def analyzer():
         path = input("[File Path]╼> ")
