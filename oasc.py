@@ -45,12 +45,12 @@ def setFinetuning():
     TEMPERATURE = float(input("[Set Temperature]╼> ")) # SET TEMPERATURE
     MAX_TOKENS = int(input("[Set Max Tokens]╼> ")) # SET MAX_TOKENS
 
-# FUNCTION TO EXPORT TO A FILE (OUTSOURCED)
+# FUNCTION TO EXPORT TO FILE (OUTSOURCED)
 def exportContent(data, path):
     with open(path, "w") as file:
         file.write(str(bs(data)))
 
-# FUNCTION TO IMPORT FROM A FILE (OUTSOURCED)
+# FUNCTION TO IMPORT FROM FILE (OUTSOURCED)
 def importContent(path):
     with open(path, "r") as file:
         content = file.readlines()
