@@ -5,9 +5,11 @@ __author__ = "z0nd3rl1ng" + "0xAsFi"
 __version__ = "0.0.1"
 
 """----------------------------------------------------------------"""
+
 # MODULE IMPORTS
 import random, os, requests
 from os import environ
+
 # THIRD PARTY REQUIREMENT CHECK
 try:
     # TRY TO IMPORT OPENAI
@@ -21,12 +23,14 @@ except ModuleNotFoundError:
     import openai
     from bs4 import BeautifulSoup as bs
 """----------------------------------------------------------------"""
+
 # GLOBAL VARIABLES
 openai.api_key = "[ENTER YOUR API KEY HERE]"
 ENGINE = "text-davinci-002"
 TEMPERATURE = 0
 MAX_TOKENS = 2048
 """----------------------------------------------------------------"""
+
 # FUNCTION TO SET OPEN AI API KEY AS ENVIRONMENT VARIABLE -> It's not working -.-"
 def setEnvKey():
     token = input("[OpenAI API Key]╼> ")
@@ -75,6 +79,7 @@ def content():
         creator()
     else:
         content()
+        
  # FUNCTION TO LIST OSINT MENU
 def OSINT():
     print("\nOSINT MENU\n")
@@ -131,6 +136,7 @@ def OSINT():
         os.system("clear")
         print("Wrong input, try again.")
         OSINT()
+        
 # FUNCTION TO LIST HELP MENU - COULD BE SWAGGED UP ;)
 def help():
     print("\nCOMMANDS\tDESCRIPTION\n")
