@@ -19,12 +19,12 @@ except ModuleNotFoundError:
     import openai
 """----------------------------------------------------------------"""
 # GLOBAL VARIABLES
-openai.api_key = "[PUT YOUR API KEY HERE]"
+openai.api_key = "[ENTER YOUR API KEY HERE]"
 ENGINE = "text-davinci-002"
 TEMPERATURE = 0
 MAX_TOKENS = 2048
 """----------------------------------------------------------------"""
-# FUNCTION TO SET OPEN AI API KEY AS ENVIRONMENT VARIABLE
+# FUNCTION TO SET OPEN AI API KEY AS ENVIRONMENT VARIABLE -> It's not working -.-"
 def setEnvKey():
     token = input("[OpenAI API Key]╼> ")
     os.system("export OPENAI_API_KEY='"+token+"'")
@@ -57,12 +57,68 @@ def content():
         creator()
     else:
         content()
- 
+ # FUNCTION TO LIST OSINT MENU
+def OSINT():
+    print("\nOSINT MENU\n")
+    print("(1)Reconnaissance")
+    print("(2)Enumeration")
+    print("(3)Email Search")
+    print("(4)Username Search")
+    print("(5)People Search")
+    print("(6)Phone Number")
+    print("(7)Google Dorking")
+    print("(0)Back\n")
+    
+    def reconnaissance():
+        print("\nScanning target for information.\n")
+        
+    def enumeration():
+        print("\nGathering data through active connections.\n")
+
+    def email_search():
+        print("\nSearching for email addresses.\n")
+        
+    def username_search():
+        print("\nSearching for usernames.\n")
+    
+    def people_search():
+        print("\nSearching for information about individuals.\n")
+    
+    def phone_number():
+        print("\nSearching for phone number information.\n")
+    
+    def google_dorking():
+        print("\nAdvanced search techniques using Google.\n")
+        
+    mode = input("[Select Mode]╼> ")
+    if mode == "1":
+        reconnaissance()
+    elif mode == "2":
+        enumeration()
+    elif mode == "3":
+        email_search()
+    elif mode == "4":
+        username_search()
+    elif mode == "5":
+        people_search()
+    elif mode == "6":
+        phone_number()
+    elif mode == "7":
+        google_dorking()
+    elif mode == "0":
+        os.system("clear")
+        banner()
+        openaiSecurityConsole()
+    else:
+        os.system("clear")
+        print("Wrong input, try again.")
+        OSINT()
 # FUNCTION TO LIST HELP MENU - COULD BE SWAGGED UP ;)
 def help():
     print("\nCOMMANDS\tDESCRIPTION\n")
     print("banner\t\tprint banner")
     print("content\t\tcall content menu")
+    print("OSINT\t\tcall OSINT menu")
     print("api-key\t\texport OpenAI API-Key to environment")
     print("fine-tuning\tconfiguration menu for fine-tuning queries")
     print("exit\t\tquit oasc\n")
@@ -76,6 +132,8 @@ def openaiSecurityConsole():
             exit()
         elif interact == "content":
             content()
+        elif interact == "OSINT":
+            OSINT()
         elif interact == "fine-tuning":
             setFinetuning()
         elif interact == "api-key":
