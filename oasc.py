@@ -45,10 +45,9 @@ def setFinetuning():
     TEMPERATURE = float(input("[Set Temperature]╼> ")) # SET TEMPERATURE
     MAX_TOKENS = int(input("[Set Max Tokens]╼> ")) # SET MAX_TOKENS
 
-# FUNCTION FOR OPENAI REQUEST (OUTSOURCED)
+# FUNCTION FOR A TYPE BASED OPENAI REQUEST (OUTSOURCED)
 def openaiRequest(type, interact):
     if type == "console":
-        # ACTUAL OPENAI REQUEST - COULD BE OUTSOURCED AS FUNCTION
         response = openai.Completion.create(
             engine=ENGINE,
             prompt=(f"{interact}"),
