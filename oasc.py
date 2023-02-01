@@ -45,16 +45,31 @@ def setFinetuning():
     TEMPERATURE = float(input("[Set Temperature]╼> ")) # SET TEMPERATURE
     MAX_TOKENS = int(input("[Set Max Tokens]╼> ")) # SET MAX_TOKENS
 
+# FUNCTION TO EXPORT CONTENT TO FILE
 def exportContent(data, path):
     with open(path, "w") as file:
         file.write(str(bs(data)))
 
+# FUNCTION TO IMPORT CONTENT FROM FILE
 def importContent(path):
     with open(path, "r") as file:
         content = file.readlines()
     content = "".join(content)
     prettyprompt = bs(content, "lxml")
     return prettyprompt
+
+# FUNCTION FOR AN OPENAI REQUEST
+def openaiRequest(type, interact):
+    if type == "console":
+        response = openai.Completion.create(
+            engine=ENGINE,
+            prompt=(f"{interact}"),
+            temperature=TEMPERATURE,
+            max_tokens=MAX_TOKENS,
+            stop=None
+        )
+        response = response["choices"][0]["text"]
+        return response
 
 # FUNCTION TO LIST CONTENT MENU
 def content():
@@ -65,12 +80,16 @@ def content():
     def analyzer():
         path = input("[File Path]╼> ")
         prompt = importContent(path)
-        print(prompt) # IMPLEMENT OPENAI REQUEST HERE
+        type = "console"
+        response = openaiRequest(type, prompt)
+        print(response)
         
     def creator():
-        data = "" # IMPLEMENT OPENAI REQUEST HERE
+        data = input("[Describe Content]╼> ")
         path = input("[File Path]╼> ")
-        exportContent(data, path)
+        type = "console"
+        response = openaiRequest(type, data)
+        exportContent(response, path)
         
     mode = input("[Select Mode]╼> ")    
     if mode == "1":
@@ -167,61 +186,53 @@ def openaiSecurityConsole():
         elif interact == "banner":
             banner()
         else:
-            # ACTUAL OPENAI REQUEST - COULD BE OUTSOURCED AS FUNCTION
-            response = openai.Completion.create(
-                engine=ENGINE,
-                prompt=(f"{interact}"),
-                temperature=TEMPERATURE,
-                max_tokens=MAX_TOKENS,
-                stop=None
-            )
-            response = response["choices"][0]["text"]
+            type = "console"
+            response = openaiRequest(type, interact)
             print(response)
 
+
 # FUNCTION FOR A CALLABLE BANNER
-# TBH GOOGLED THIS SOMEHOW TOGETHER BUT I RLY LIKE THE GRADIENT SO I MOSTLY USE IT <3
 def banner():
-	padding = '  '
-	O = [[' ','┌','─','┐'],
+    padding = '  '
+    O = [[' ','┌','─','┐'],
 	     [' ','│',' ','│'],
 	     [' ','└','─','┘']]
-	A = [[' ','┌','─','┐'],
+    A = [[' ','┌','─','┐'],
 	     [' ','├','─','┤'],
 	     [' ','┴',' ','┴']]
-	S = [[' ','┌','─','┐'],
+    S = [[' ','┌','─','┐'],
 	     [' ','└','─','┐'],
 	     [' ','└','─','┘']]
-	C = [[' ','┌','─','┐'],
+    C = [[' ','┌','─','┐'],
 	     [' ','│',' ',' '],
 	     [' ','└','─','┘']]
 	
-	banner = [O,A,S,C]
-	final = []
-	print('\r')
-	init_color = random.randint(10,40)
-	txt_color = init_color
-	cl = 0
+    banner = [O,A,S,C]
+    final = []
+    print('\r')
+    init_color = random.randint(10,40)
+    txt_color = init_color
+    cl = 0
 
-	for charset in range(0, 3):
-		for pos in range(0, len(banner)):
-			for i in range(0, len(banner[pos][charset])):
-				clr = f'\033[38;5;{txt_color}m'
-				char = f'{clr}{banner[pos][charset][i]}'
-				final.append(char)
-				cl += 1
-				txt_color = txt_color + 36 if cl <= 3 else txt_color
+    for charset in range(0, 3):
+        for pos in range(0, len(banner)):
+            for i in range(0, len(banner[pos][charset])):
+                clr = f'\033[38;5;{txt_color}m'
+                char = f'{clr}{banner[pos][charset][i]}'
+                final.append(char)
+                cl += 1
+                txt_color = txt_color + 36 if cl <= 3 else txt_color
+            cl = 0
+            txt_color = init_color
+        init_color += 31
+        if charset < 2: final.append('\n   ')
 
-			cl = 0
+    print(f"   {''.join(final)}")
+    print(f'{padding}  by z0nd3rl1ng & \n\t 0xAsFi\n')
 
-			txt_color = init_color
-		init_color += 31
-
-		if charset < 2: final.append('\n   ')
-
-	print(f"   {''.join(final)}")
-	print(f'{padding}  by z0nd3rl1ng & \n\t 0xAsFi\n')
 
 # MAIN FUNCTION (ENTRY-POINT)
 if __name__ == "__main__":
     banner()
     openaiSecurityConsole()
+
