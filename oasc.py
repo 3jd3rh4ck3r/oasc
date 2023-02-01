@@ -71,6 +71,12 @@ def openaiRequest(type, interact):
         response = response["choices"][0]["text"]
         return response
 
+# FUNCTION FOR GOOGLE DORK REQUEST
+def googleDorkRequest(query):
+    params = {'q': query}
+    response = requests.get('https://www.google.com/search', params=params)
+    return response.text
+
 # FUNCTION TO LIST CONTENT MENU
 def content():
     print("\nCONTENT MENU\n")
@@ -110,7 +116,7 @@ def OSINT():
     print("(6)Phone Number")
     print("(7)Google Dorking")
     print("(0)Back\n")
-    
+
     def reconnaissance():
         print("\nScanning target for information.\n")
         
@@ -131,6 +137,9 @@ def OSINT():
     
     def google_dorking():
         print("\nAdvanced search techniques using Google.\n")
+        # THIS IS HOW YOU COULD USE IT FURTHER FROM HERE
+        results = googleDorkRequest("inurl:login site:tiktok.com")  # OPERATORS MIGHT BE SET DIFFERENT OR EXTENDED
+        exportContent(results, "dork-report.html")  # SAVE RESPONSE
         
     mode = input("[Select Mode]╼> ")
     if mode == "1":
