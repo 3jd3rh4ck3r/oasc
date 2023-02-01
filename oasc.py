@@ -45,36 +45,23 @@ def setFinetuning():
     TEMPERATURE = float(input("[Set Temperature]╼> ")) # SET TEMPERATURE
     MAX_TOKENS = int(input("[Set Max Tokens]╼> ")) # SET MAX_TOKENS
 
-# FUNCTION FOR A TYPE BASED OPENAI REQUEST (OUTSOURCED)
-def openaiRequest(type, interact):
-    if type == "console":
-        response = openai.Completion.create(
-            engine=ENGINE,
-            prompt=(f"{interact}"),
-            temperature=TEMPERATURE,
-            max_tokens=MAX_TOKENS,
-            stop=None
-        )
-        response = response["choices"][0]["text"]
-        return response
+def exportContent(data, path):
+    with open(path, "w") as file:
+        file.write(str(bs(data)))
+
+def importContent(path):
+    with open(path, "r") as file:
+        content = file.readlines()
+    content = "".join(content)
+    prettyprompt = bs(content, "lxml")
+    return prettyprompt
 
 # FUNCTION TO LIST CONTENT MENU
 def content():
     print("\nCONTENT MENU\n")
     print("(1)Analyzer")
     print("(2)Creator\n")
-  
-    def exportContent(data, path):
-        with open(path, "w") as file:
-            file.write(str(bs(data)))
-            
-    def importContent(path):   
-        with open(path, "r") as file:
-            content = file.readlines()
-        content = "".join(content)
-        prettyprompt = bs(content, "lxml")
-        return prettyprompt
-                 
+
     def analyzer():
         path = input("[File Path]╼> ")
         prompt = importContent(path)
@@ -180,8 +167,15 @@ def openaiSecurityConsole():
         elif interact == "banner":
             banner()
         else:
-            type = "console"
-            response = openaiRequest(type, interact)
+            # ACTUAL OPENAI REQUEST - COULD BE OUTSOURCED AS FUNCTION
+            response = openai.Completion.create(
+                engine=ENGINE,
+                prompt=(f"{interact}"),
+                temperature=TEMPERATURE,
+                max_tokens=MAX_TOKENS,
+                stop=None
+            )
+            response = response["choices"][0]["text"]
             print(response)
 
 # FUNCTION FOR A CALLABLE BANNER
