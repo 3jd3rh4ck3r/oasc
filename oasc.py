@@ -31,10 +31,12 @@ TEMPERATURE = 0
 MAX_TOKENS = 2048
 """----------------------------------------------------------------"""
 
+
 # FUNCTION TO SET OPEN AI API KEY AS ENVIRONMENT VARIABLE -> It's not working -.-"
 def setEnvKey():
     token = input("[OpenAI API Key]╼> ")
     os.system("export OPENAI_API_KEY='"+token+"'")
+
 
 # FUNCTION TO LIST AND SET AVAILABLE ENGINES, TEMPERATURE, MAX_TOKENS
 def setFinetuning():
@@ -45,10 +47,12 @@ def setFinetuning():
     TEMPERATURE = float(input("[Set Temperature]╼> ")) # SET TEMPERATURE
     MAX_TOKENS = int(input("[Set Max Tokens]╼> ")) # SET MAX_TOKENS
 
+
 # FUNCTION TO EXPORT CONTENT TO FILE
 def exportContent(data, path):
     with open(path, "w") as file:
         file.write(str(bs(data)))
+
 
 # FUNCTION TO IMPORT CONTENT FROM FILE
 def importContent(path):
@@ -57,6 +61,7 @@ def importContent(path):
     content = "".join(content)
     prettyprompt = bs(content, "lxml")
     return prettyprompt
+
 
 # FUNCTION FOR AN OPENAI REQUEST
 def openaiRequest(type, interact):
@@ -71,42 +76,48 @@ def openaiRequest(type, interact):
         response = response["choices"][0]["text"]
         return response
 
+
 # FUNCTION FOR GOOGLE DORK REQUEST
 def googleDorkRequest(query):
     params = {'q': query}
     response = requests.get('https://www.google.com/search', params=params)
     return response.text
 
-# FUNCTION TO LIST CONTENT MENU
-def content():
-    print("\nCONTENT MENU\n")
-    print("(1)Analyzer")
-    print("(2)Creator\n")
 
-    def analyzer():
-        path = input("[File Path]╼> ")
-        prompt = importContent(path)
-        type = "console"
-        response = openaiRequest(type, prompt)
-        print(response)
-        
-    def creator():
-        data = input("[Describe Content]╼> ")
-        path = input("[File Path]╼> ")
-        type = "console"
-        response = openaiRequest(type, data)
-        exportContent(response, path)
-        
+# FUNCTION TO ANALYZE FILE CONTENT
+def analyzer():
+    path = input("[File Path]╼> ")
+    prompt = importContent(path)
+    type = "console"
+    response = openaiRequest(type, prompt)
+    print(response)
+
+
+# FUNCTION TO CREATE FILE TEMPLATE
+def creator():
+    data = input("[Describe Content]╼> ")
+    path = input("[File Path]╼> ")
+    type = "console"
+    response = openaiRequest(type, data)
+    exportContent(response, path)
+
+
+# FUNCTION TO LIST SOCIAL ENGINEERING MENU
+def social():
+    print("\nSOCIAL ENGINEERING MENU\n")
+    print("(1)Analyze File Content")
+    print("(2)Generate Template\n")
     mode = input("[Select Mode]╼> ")    
     if mode == "1":
         analyzer()
     elif mode == "2":
         creator()
     else:
-        content()
-        
- # FUNCTION TO LIST OSINT MENU
-def OSINT():
+        social()
+
+
+# FUNCTION TO LIST OSINT MENU
+def osint():
     print("\nOSINT MENU\n")
     print("(1)Reconnaissance")
     print("(2)Enumeration")
@@ -163,17 +174,19 @@ def OSINT():
     else:
         os.system("clear")
         print("Wrong input, try again.")
-        OSINT()
-        
+        osint()
+
+
 # FUNCTION TO LIST HELP MENU - COULD BE SWAGGED UP ;)
 def help():
     print("\nCOMMANDS\tDESCRIPTION\n")
     print("banner\t\tprint banner")
-    print("content\t\tcall content menu")
-    print("OSINT\t\tcall OSINT menu")
-    print("api-key\t\texport OpenAI API-Key to environment")
+    print("social\t\tcall social engineering menu")
+    print("osint\t\tcall osint menu")
+    print("api-key\t\tset OpenAI API to environment")
     print("fine-tuning\tconfiguration menu for fine-tuning queries")
     print("exit\t\tquit oasc\n")
+
 
 # FUNCTION FOR THE OPENAI QUERY PROMPT (CORE-SYSTEM)
 def openaiSecurityConsole():
@@ -182,10 +195,10 @@ def openaiSecurityConsole():
         # SYSTEM COMMAND HANDLER 
         if interact == "exit":
             exit()
-        elif interact == "content":
-            content()
-        elif interact == "OSINT":
-            OSINT()
+        elif interact == "social":
+            social()
+        elif interact == "osint":
+            osint()
         elif interact == "fine-tuning":
             setFinetuning()
         elif interact == "api-key":
