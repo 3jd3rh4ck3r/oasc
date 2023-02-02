@@ -22,6 +22,7 @@ except ModuleNotFoundError:
     os.system("pip3 install beautifulsoup4")
     import openai
     from bs4 import BeautifulSoup as bs
+    # PIP INSTALL LXML FOR BS
 """----------------------------------------------------------------"""
 
 # GLOBAL VARIABLES
