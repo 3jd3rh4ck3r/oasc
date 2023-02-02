@@ -7,7 +7,7 @@ Python3 AI Cybersecurity Framework
 <br>
 <h2>Project Banners</h2>
 <img src="banner1.png" witdth="100%"/>
-<img src="banner1.png" witdth="100%"/>
+<img src="banner2.png" witdth="100%"/>
 
  <!--<h3>GET STARTED</h3>
 
