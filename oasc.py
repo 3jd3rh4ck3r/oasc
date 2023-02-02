@@ -88,8 +88,9 @@ def googleDorkRequest(query):
 def analyzer():
     path = input("[File Path]╼> ")
     content = importContent(path)
+    prompt = "Describe following file content: " + str(content)
     type = "console"
-    response = openaiRequest(type, "Describe the following file content: "+content)
+    response = openaiRequest(type, prompt)
     print(response)
 
 
