@@ -103,9 +103,9 @@ def creator():
     exportContent(response, path)
 
 
-# FUNCTION TO LIST SOCIAL ENGINEERING MENU
+# FUNCTION TO LIST SOCIAL AND REVERSE ENGINEERING MENU
 def social():
-    print("\nSOCIAL ENGINEERING MENU\n")
+    print("\nSOCIAL AND REVERSE ENGINEERING MENU\n")
     print("(1)Analyze File Content")
     print("(2)Generate Template\n")
     mode = input("[Select Mode]╼> ")    
@@ -182,7 +182,7 @@ def osint():
 def help():
     print("\nCOMMANDS\tDESCRIPTION\n")
     print("banner\t\tprint banner")
-    print("social\t\tcall social engineering menu")
+    print("social\t\tcall social and reverse engineering menu")
     print("osint\t\tcall osint menu")
     print("api-key\t\tset OpenAI API to environment")
     print("fine-tuning\tconfiguration menu for fine-tuning queries")
