@@ -35,14 +35,19 @@ def setEnvKey():
     os.system("export OPENAI_API_KEY='"+token+"'")
 
 
-# FUNCTION TO LIST AND SET AVAILABLE ENGINES, TEMPERATURE, MAX_TOKENS
-def setFinetuning():
-    engineslist = openai.Engine.list()
-    for ids in engineslist.data:
-        print(ids.id) # LIST ALL ENGINES
-    ENGINE = input("[Select Engine]╼> ") # SET ENGINE
-    TEMPERATURE = float(input("[Set Temperature]╼> ")) # SET TEMPERATURE
-    MAX_TOKENS = int(input("[Set Max Tokens]╼> ")) # SET MAX_TOKENS
+# FUNCTION TO SET FINETUNING FOR OPENAI REQUEST
+def setFinetuning(engine, temperature, max_tokens):
+    global ENGINE, TEMPERATURE, MAX_TOKENS
+    ENGINE = engine
+    TEMPERATURE = temperature
+    MAX_TOKENS = max_tokens
+
+
+# FUNCTION TO LIST ALL ENGINES
+    def listEngines():
+        engineslist = openai.Engine.list()
+        for ids in engineslist.data:
+            print(ids.id)
 
 
 # FUNCTION TO EXPORT CONTENT TO FILE
@@ -182,7 +187,6 @@ def help():
     print("social\t\tcall social and reverse engineering menu")
     print("osint\t\tcall osint menu")
     print("api-key\t\tset OpenAI API to environment")
-    print("fine-tuning\tconfiguration menu for fine-tuning queries")
     print("exit\t\tquit oasc\n")
 
 
@@ -197,8 +201,6 @@ def openaiSecurityConsole():
             social()
         elif interact == "osint":
             osint()
-        elif interact == "fine-tuning":
-            setFinetuning()
         elif interact == "api-key":
             setEnvKey()
         elif interact == "help":
