@@ -181,9 +181,7 @@ def osint():
 
     def coinHunter():
         print("\nCoin Hunter - Crypto Wallet Tracker\n")
-        print("(1)Bitcoin Mainnet")
-        print("(2)Ethereum Mainnet")
-        network = input("[Select Network]╼> ")
+        network = input("[btc/eth?]╼> ")
         address = input("[Wallet Address]╼> ")
         blockchainRequest(network, address)
         
