@@ -181,10 +181,15 @@ def osint():
 
     def coinHunter():
         print("\nCoin Hunter - Crypto Wallet Tracker\n")
-        network = input("[btc/eth?]╼> ")
+        print("(1) Bitcoin Mainnet")
+        print("(2) Ethereum Mainnet")
+        network = input("[Select Network]╼> ")
         address = input("[Wallet Address]╼> ")
-        blockchainRequest(network, address)
-        
+        if network == "1":
+            blockchainRequest("btc", address)
+        if network == "2":
+            blockchainRequest("eth", address)
+
     mode = input("[Select Mode]╼> ")
     if mode == "1":
         reconnaissance()
