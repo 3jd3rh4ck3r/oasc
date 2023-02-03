@@ -12,7 +12,7 @@ try:
     import openai, requests
     from bs4 import BeautifulSoup as bs
 except ModuleNotFoundError:
-    print("[*] install missing modules")
+    print("[*] installing missing modules")
     os.system("pip3 install requests")
     os.system("pip3 install openai")
     os.system("pip3 install beautifulsoup4")
