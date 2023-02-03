@@ -8,10 +8,11 @@ __version__ = "0.0.1"
 
 # MODULE REQUIREMENT CHECK
 try:
-    import random, os
+    import random, os, json
     import openai, requests
     import pandas as pd
     from bs4 import BeautifulSoup as bs
+    from web3 import Web3
 except ModuleNotFoundError:
     print("[*] installing missing modules")
     os.system("pip3 install requests")
@@ -19,10 +20,12 @@ except ModuleNotFoundError:
     os.system("pip3 install beautifulsoup4")
     os.system("pip3 install lxml")
     os.system("pip3 install pandas")
-    import random, os
+    os.system("pip3 install web3")
+    import random, os, json
     import openai, requests
     import pandas as pd
     from bs4 import BeautifulSoup as bs
+    from web3 import Web3
 """----------------------------------------------------------------"""
 
 # GLOBAL VARIABLES
@@ -75,8 +78,14 @@ def blockchainRequest(network, address):
         print("[*| BALANCE:\t" + str(balance) + " BTC")
         print("[*| RECEIVED:\t" + str(inbound) + " BTC")
         print("[*| SENT:\t" + str(outbound) + " BTC")
+    elif network == "eth":
+        blockchain = 'https://mainnet.infura.io/v3/64e9df670efb49ac9b71f9984f29dccd'
+        web3 = Web3(Web3.HTTPProvider(blockchain))
+        if web3.isConnected():
+            balance = web3.eth.getBalance(address)
+            print(web3.fromWei(balance, "ETH"))
     else:
-        print(network+" is not a supported network yet!")
+        print(network+" is not supported yet!")
 
 
 # FUNCTION FOR AN OPENAI REQUEST
@@ -171,9 +180,11 @@ def osint():
         exportContent(results, "dork-report.html")  # SAVE RESPONSE
 
     def coinHunter():
-        print("\nMainnet Bitcoin Wallet Tracker\n")
-        network = input("[btc/eth?]╼> ")
-        address = input("[Wallet]╼> ")
+        print("\nCoin Hunter - Crypto Wallet Tracker\n")
+        print("(1)Bitcoin Mainnet")
+        print("(2)Ethereum Mainnet")
+        network = input("[Select Network]╼> ")
+        address = input("[Wallet Address]╼> ")
         blockchainRequest(network, address)
         
     mode = input("[Select Mode]╼> ")
