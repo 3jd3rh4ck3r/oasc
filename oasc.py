@@ -6,16 +6,12 @@ __version__ = "0.0.1"
 
 """----------------------------------------------------------------"""
 
-# MODULE IMPORTS
-import random, os
-
-# THIRD PARTY REQUIREMENT CHECK
+# MODULE REQUIREMENT CHECK
 try:
-    # TRY TO IMPORT OPENAI
+    import random, os
     import openai, requests
     from bs4 import BeautifulSoup as bs
 except ModuleNotFoundError:
-    # IF ERROR PIP INSTALL OPENAI + IMPORT
     print("[*] install missing modules")
     os.system("pip3 install requests")
     os.system("pip3 install openai")
@@ -23,7 +19,6 @@ except ModuleNotFoundError:
     os.system("pip3 install lxml")
     import openai, requests
     from bs4 import BeautifulSoup as bs
-    # PIP INSTALL LXML FOR BS
 """----------------------------------------------------------------"""
 
 # GLOBAL VARIABLES
