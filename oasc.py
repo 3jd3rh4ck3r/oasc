@@ -132,19 +132,19 @@ def osint():
     def enumeration():
         print("\nGathering data through active connections.\n")
 
-    def email_search():
+    def emailSearch():
         print("\nSearching for email addresses.\n")
         
-    def username_search():
+    def usernameSearch():
         print("\nSearching for usernames.\n")
     
-    def people_search():
+    def peopleSearch():
         print("\nSearching for information about individuals.\n")
     
-    def phone_number():
+    def phoneNumber():
         print("\nSearching for phone number information.\n")
-    
-    def google_dorking():
+
+    def googleDorking():
         print("\nAdvanced search techniques using Google.\n")
         # THIS IS HOW YOU COULD USE IT FURTHER FROM HERE
         results = googleDorkRequest("inurl:login site:tiktok.com")  # OPERATORS MIGHT BE SET DIFFERENT OR EXTENDED
@@ -156,15 +156,15 @@ def osint():
     elif mode == "2":
         enumeration()
     elif mode == "3":
-        email_search()
+        emailSearch()
     elif mode == "4":
-        username_search()
+        usernameSearch()
     elif mode == "5":
-        people_search()
+        peopleSearch()
     elif mode == "6":
-        phone_number()
+        phoneNumber()
     elif mode == "7":
-        google_dorking()
+        googleDorking()
     elif mode == "0":
         os.system("clear")
         banner()
