@@ -10,6 +10,7 @@ __version__ = "0.0.1"
 try:
     import random, os
     import openai, requests
+    import pandas as pd
     from bs4 import BeautifulSoup as bs
 except ModuleNotFoundError:
     print("[*] installing missing modules")
@@ -17,7 +18,10 @@ except ModuleNotFoundError:
     os.system("pip3 install openai")
     os.system("pip3 install beautifulsoup4")
     os.system("pip3 install lxml")
+    os.system("pip3 install pandas")
+    import random, os
     import openai, requests
+    import pandas as pd
     from bs4 import BeautifulSoup as bs
 """----------------------------------------------------------------"""
 
@@ -58,6 +62,21 @@ def importContent(path):
     content = "".join(content)
     prettyprompt = bs(content, "lxml")
     return prettyprompt
+
+
+# FUNCTION FOR A BLOCKCHAIN REQUEST
+def blockchainRequest(network, address):
+    if network == "btc":
+        blockchain = 'https://blockchain.info/rawaddr/' + address
+        wallet = pd.read_json(blockchain, lines=True)
+        balance = float(wallet.final_balance) / 100000000
+        inbound = float(wallet.total_received) / 100000000
+        outbound = float(wallet.total_sent) / 100000000
+        print("[*| BALANCE:\t" + str(balance) + " BTC")
+        print("[*| RECEIVED:\t" + str(inbound) + " BTC")
+        print("[*| SENT:\t" + str(outbound) + " BTC")
+    else:
+        print(network+" is not a supported network yet!")
 
 
 # FUNCTION FOR AN OPENAI REQUEST
@@ -124,6 +143,7 @@ def osint():
     print("(5)People Search")
     print("(6)Phone Number")
     print("(7)Google Dorking")
+    print("(8)Coin Hunter")
     print("(0)Back\n")
 
     def reconnaissance():
@@ -149,6 +169,12 @@ def osint():
         # THIS IS HOW YOU COULD USE IT FURTHER FROM HERE
         results = googleDorkRequest("inurl:login site:tiktok.com")  # OPERATORS MIGHT BE SET DIFFERENT OR EXTENDED
         exportContent(results, "dork-report.html")  # SAVE RESPONSE
+
+    def coinHunter():
+        print("\nMainnet Bitcoin Wallet Tracker\n")
+        network = input("[btc/eth?]╼> ")
+        address = input("[Wallet]╼> ")
+        blockchainRequest(network, address)
         
     mode = input("[Select Mode]╼> ")
     if mode == "1":
@@ -165,6 +191,8 @@ def osint():
         phoneNumber()
     elif mode == "7":
         googleDorking()
+    elif mode == "8":
+        coinHunter()
     elif mode == "0":
         os.system("clear")
         banner()
