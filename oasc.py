@@ -37,7 +37,6 @@ def setEnvKey():
 
 # FUNCTION TO SET FINETUNING FOR OPENAI REQUEST
 def setFinetuning(engine, temperature, max_tokens):
-    global ENGINE, TEMPERATURE, MAX_TOKENS
     ENGINE = engine
     TEMPERATURE = temperature
     MAX_TOKENS = max_tokens
