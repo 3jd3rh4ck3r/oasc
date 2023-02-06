@@ -13,6 +13,9 @@ try:
     import pandas as pd
     from bs4 import BeautifulSoup as bs
     from web3 import Web3
+    import stem
+    import stem.connection
+    import stem.process
 except ModuleNotFoundError:
     print("[*] installing missing modules")
     os.system("pip3 install requests")
@@ -21,11 +24,15 @@ except ModuleNotFoundError:
     os.system("pip3 install lxml")
     os.system("pip3 install pandas")
     os.system("pip3 install web3")
+    os.system("pip3 install stem")
     import random, os, json
     import openai, requests
     import pandas as pd
     from bs4 import BeautifulSoup as bs
     from web3 import Web3
+    import stem
+    import stem.connection
+    import stem.process
 """----------------------------------------------------------------"""
 
 # GLOBAL VARIABLES
@@ -70,6 +77,13 @@ def importContent(path):
     prettyprompt = bs(content, "lxml")
     return prettyprompt
 
+# FUNCTION FOR TOR NETWORK REQUEST
+def torRequest():
+    # SET TOR AS PROXY
+    session = requests.session()
+    session.proxies = {'http':  'socks5://127.0.0.1:9050', 'https': 'socks5://127.0.0.1:9050'}
+    return session
+
 
 # FUNCTION FOR A BLOCKCHAIN REQUEST
 def blockchainRequest(network, address):
@@ -112,6 +126,17 @@ def googleDorkRequest(query):
     response = requests.get('https://www.google.com/search', params=params)
     return response.text
 
+def oniondump():
+    # CREATE A TOR PROCESS AND SAVE RESPONSE TO FILE
+    tor_process = stem.process.launch_tor_with_config(config={'SocksPort': str(9050), 'ControlPort': str(9051)})
+    onionurl = input("[Onion Url]╼> ")
+    path = input("[File Path]╼> ")
+    try:
+        request = torRequest()
+        response = request.get(onionurl)
+        exportContent(response, path)
+    finally:
+        tor_process.kill()
 
 # FUNCTION TO ANALYZE FILE CONTENT
 def analyzer():
@@ -137,11 +162,14 @@ def social():
     print("\nSOCIAL AND REVERSE ENGINEERING MENU\n")
     print("(1)Analyze File Content")
     print("(2)Generate Template\n")
+    print("(3)Onion Site Dump")
     mode = input("[Select Mode]╼> ")    
     if mode == "1":
         analyzer()
     elif mode == "2":
         creator()
+    elif mode == "3":
+        oniondump()
     else:
         social()
 
