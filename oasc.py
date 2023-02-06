@@ -13,6 +13,7 @@ try:
     import pandas as pd
     from bs4 import BeautifulSoup as bs
     from web3 import Web3
+    from requests.structures import CaseInsensitiveDict
 except ModuleNotFoundError:
     print("[*] installing missing modules")
     os.system("pip3 install requests")
@@ -26,10 +27,12 @@ except ModuleNotFoundError:
     import pandas as pd
     from bs4 import BeautifulSoup as bs
     from web3 import Web3
+    from requests.structures import CaseInsensitiveDict
 """----------------------------------------------------------------"""
 
 # GLOBAL VARIABLES
 openai.api_key = "[ENTER YOUR API KEY HERE]"
+numlookupapikey = "[PUT YOUR API KEY HERE]"  # NUMLOOKUPAPI HAS 100 REQUEST PER MONTH FOR FREE
 ENGINE = "text-davinci-002"
 TEMPERATURE = 0
 MAX_TOKENS = 2048
@@ -132,6 +135,27 @@ def creator():
     exportContent(response, path)
 
 
+# FUNCTION FOR NUMLOOKUP API REQUEST
+def numlookupRequest(mobilenumber):
+    url = "https://api.numlookupapi.com/v1/validate/"+mobilenumber
+    headers = CaseInsensitiveDict()
+    headers["apikey"] = numlookupapikey
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        data = response.json()
+        country_code = data["country_code"]
+        carrier = data["carrier"]
+        line_type = data["line_type"]
+        country = data["country_name"]
+        print("\nMobile Number:\t", mobilenumber)
+        print("Country Code:\t", country_code)
+        print("Carrier:\t", carrier)
+        print("Line Type:\t", line_type)
+        print("Country:\t", country)
+    else:
+        print("\nError retrieving data for mobile number:", mobilenumber)
+
+
 # FUNCTION TO LIST SOCIAL AND REVERSE ENGINEERING MENU
 def social():
     print("\nSOCIAL AND REVERSE ENGINEERING MENU\n")
@@ -176,6 +200,9 @@ def osint():
     
     def phoneNumber():
         print("\nSearching for phone number information.\n")
+        mobilenumber = input("[Mobile Number]╼> ")
+        numlookupRequest(mobilenumber)
+
 
     def googleDorking():
         print("\nAdvanced search techniques using Google.\n")
