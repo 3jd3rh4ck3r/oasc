@@ -121,14 +121,10 @@ def googleDorkRequest(query):
 # FUNCTION FOR A CENSYS API REQUEST
 def censysRequest(query):
     censyshost = CensysHosts(cenapikey,censecret)
-    # RESULTS
     results = censyshost.search(query, per_page=5, pages=2)
     rs = results.view_all()
-
-    # VIRTUAL HOSTS
     hosts = censyshost.search(query, per_page=5, virtual_hosts="ONLY")
     hs = hosts()
-
     export = str(rs)+str(hs)
     exportContent(export, "recon-report-"+query)
 
