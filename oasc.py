@@ -154,7 +154,7 @@ def censysRequest(query):
     hosts = censyshost.search(query, per_page=5, virtual_hosts="ONLY")
     hs = hosts()
     export = str(rs)+str(hs)
-    exportContent(export, "recon-report-"+query)
+    exportContent(export, "report-"+query)
 
 
 # FUNCTION TO ANALYZE FILE CONTENT
