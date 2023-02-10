@@ -13,6 +13,10 @@ try:
     import pandas as pd
     from bs4 import BeautifulSoup as bs
     from web3 import Web3
+    import stem
+    import stem.connection
+    import stem.process
+    from requests.structures import CaseInsensitiveDict
     from censys.search import CensysHosts
 except ModuleNotFoundError:
     print("[*] installing missing modules")
@@ -23,16 +27,22 @@ except ModuleNotFoundError:
     os.system("pip3 install pandas")
     os.system("pip3 install web3")
     os.system("pip3 install censys")
+    os.system("pip3 install stem")
     import random, os, json
     import openai, requests
     import pandas as pd
     from bs4 import BeautifulSoup as bs
     from web3 import Web3
     from censys.search import CensysHosts
+    import stem
+    import stem.connection
+    import stem.process
+    from requests.structures import CaseInsensitiveDict
 """----------------------------------------------------------------"""
 
 # GLOBAL VARIABLES
 openai.api_key = "[ENTER YOUR API KEY HERE]"
+numlookupapikey = "[PUT YOUR API KEY HERE]"  # NUMLOOKUPAPI HAS 100 REQUEST PER MONTH FOR FREE
 cenapikey = "[ENTER YOUR API ID HERE]"
 censecret = "[ENTER YOUR API SECRET HERE]"
 ENGINE = "text-davinci-002"
@@ -74,6 +84,13 @@ def importContent(path):
     content = "".join(content)
     prettyprompt = bs(content, "lxml")
     return prettyprompt
+
+# FUNCTION FOR TOR NETWORK REQUEST
+def torRequest():
+    # SET TOR AS PROXY
+    session = requests.session()
+    session.proxies = {'http':  'socks5://127.0.0.1:9050', 'https': 'socks5://127.0.0.1:9050'}
+    return session
 
 
 # FUNCTION FOR A BLOCKCHAIN REQUEST
@@ -117,6 +134,17 @@ def googleDorkRequest(query):
     response = requests.get('https://www.google.com/search', params=params)
     return response.text
 
+def oniondump():
+    # CREATE A TOR PROCESS AND SAVE RESPONSE TO FILE
+    tor_process = stem.process.launch_tor_with_config(config={'SocksPort': str(9050), 'ControlPort': str(9051)})
+    onionurl = input("[Onion Url]╼> ")
+    path = input("[File Path]╼> ")
+    try:
+        request = torRequest()
+        response = request.get(onionurl)
+        exportContent(response, path)
+    finally:
+        tor_process.kill()
 
 # FUNCTION FOR A CENSYS API REQUEST
 def censysRequest(query):
@@ -146,6 +174,27 @@ def creator():
     type = "console"
     response = openaiRequest(type, data)
     exportContent(response, path)
+
+
+# FUNCTION FOR NUMLOOKUP API REQUEST
+def numlookupRequest(mobilenumber):
+    url = "https://api.numlookupapi.com/v1/validate/"+mobilenumber
+    headers = CaseInsensitiveDict()
+    headers["apikey"] = numlookupapikey
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        data = response.json()
+        country_code = data["country_code"]
+        carrier = data["carrier"]
+        line_type = data["line_type"]
+        country = data["country_name"]
+        print("\nMobile Number:\t", mobilenumber)
+        print("Country Code:\t", country_code)
+        print("Carrier:\t", carrier)
+        print("Line Type:\t", line_type)
+        print("Country:\t", country)
+    else:
+        print("\nError retrieving data for mobile number:", mobilenumber)
 
 
 # FUNCTION TO LIST SOCIAL AND REVERSE ENGINEERING MENU
@@ -194,6 +243,9 @@ def osint():
     
     def phoneNumber():
         print("\nSearching for phone number information.\n")
+        mobilenumber = input("[Mobile Number]╼> ")
+        numlookupRequest(mobilenumber)
+
 
     def googleDorking():
         print("\nAdvanced search techniques using Google.\n")
