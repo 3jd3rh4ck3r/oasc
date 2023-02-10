@@ -13,6 +13,7 @@ try:
     import pandas as pd
     from bs4 import BeautifulSoup as bs
     from web3 import Web3
+    from censys.search import CensysHosts
 except ModuleNotFoundError:
     print("[*] installing missing modules")
     os.system("pip3 install requests")
@@ -21,15 +22,19 @@ except ModuleNotFoundError:
     os.system("pip3 install lxml")
     os.system("pip3 install pandas")
     os.system("pip3 install web3")
+    os.system("pip3 install censys")
     import random, os, json
     import openai, requests
     import pandas as pd
     from bs4 import BeautifulSoup as bs
     from web3 import Web3
+    from censys.search import CensysHosts
 """----------------------------------------------------------------"""
 
 # GLOBAL VARIABLES
 openai.api_key = "[ENTER YOUR API KEY HERE]"
+cenapikey = "[ENTER YOUR API ID HERE]"
+censecret = "[ENTER YOUR API SECRET HERE]"
 ENGINE = "text-davinci-002"
 TEMPERATURE = 0
 MAX_TOKENS = 2048
@@ -113,6 +118,21 @@ def googleDorkRequest(query):
     return response.text
 
 
+# FUNCTION FOR A CENSYS API REQUEST
+def censysRequest(query):
+    censyshost = CensysHosts(cenapikey,censecret)
+    # RESULTS
+    results = censyshost.search(query, per_page=5, pages=2)
+    rs = results.view_all()
+
+    # VIRTUAL HOSTS
+    hosts = censyshost.search(query, per_page=5, virtual_hosts="ONLY")
+    hs = hosts()
+
+    export = str(rs)+str(hs)
+    exportContent(export, "recon-report-"+query)
+
+
 # FUNCTION TO ANALYZE FILE CONTENT
 def analyzer():
     path = input("[File Path]╼> ")
@@ -160,7 +180,9 @@ def osint():
     print("(0)Back\n")
 
     def reconnaissance():
-        print("\nScanning target for information.\n")
+        print("\nScanning target with censys search\n")
+        query = input("[Domain]╼> ")
+        censysRequest(query)
         
     def enumeration():
         print("\nGathering data through active connections.\n")
