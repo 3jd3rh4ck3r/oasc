@@ -58,17 +58,17 @@ def setEnvKey():
 
 
 # FUNCTION TO SET FINETUNING FOR OPENAI REQUEST
-def setFinetuning(engine, temperature, max_tokens):
+def openaiFinetuning(engine, temperature, max_tokens):
     ENGINE = engine
     TEMPERATURE = temperature
     MAX_TOKENS = max_tokens
 
 
-# FUNCTION TO LIST ALL ENGINES
-    def listEngines():
-        engineslist = openai.Engine.list()
-        for ids in engineslist.data:
-            print(ids.id)
+# FUNCTION TO LIST OPENAI ENGINES
+def openaiEngines():
+    engines = openai.Engine.list()
+    for ids in engines.data:
+        print(ids.id)
 
 
 # FUNCTION TO EXPORT CONTENT TO FILE
@@ -84,6 +84,7 @@ def importContent(path):
     content = "".join(content)
     prettyprompt = bs(content, "lxml")
     return prettyprompt
+
 
 # FUNCTION FOR TOR NETWORK REQUEST
 def torRequest():
@@ -133,6 +134,7 @@ def googleDorkRequest(query):
     params = {'q': query}
     response = requests.get('https://www.google.com/search', params=params)
     return response.text
+
 
 def oniondump():
     # CREATE A TOR PROCESS AND SAVE RESPONSE TO FILE
@@ -198,17 +200,19 @@ def numlookupRequest(mobilenumber):
 
 
 # FUNCTION TO LIST SOCIAL AND REVERSE ENGINEERING MENU
-def social():
-    print("\nSOCIAL AND REVERSE ENGINEERING MENU\n")
-    print("(1)Analyze File Content")
-    print("(2)Generate Template\n")
+def file():
+    print("\nFILE MENU\n")
+    print("(1)File Content Analyzer")
+    print("(2)Generate File Template\n")
     mode = input("[Select Mode]╼> ")    
     if mode == "1":
         analyzer()
     elif mode == "2":
         creator()
     else:
-        social()
+        banner()
+        print("Wrong input, try again.")
+        openaiSecurityConsole()
 
 
 # FUNCTION TO LIST OSINT MENU
@@ -255,14 +259,18 @@ def osint():
 
     def coinHunter():
         print("\nCoin Hunter - Crypto Wallet Tracker\n")
-        print("(1) Bitcoin Mainnet")
-        print("(2) Ethereum Mainnet")
+        print("(1)Bitcoin Mainnet")
+        print("(2)Ethereum Mainnet")
         network = input("[Select Network]╼> ")
         address = input("[Wallet Address]╼> ")
         if network == "1":
             blockchainRequest("btc", address)
         if network == "2":
             blockchainRequest("eth", address)
+        else:
+            banner()
+            print("Wrong input, try again.")
+            osint()
 
     mode = input("[Select Mode]╼> ")
     if mode == "1":
@@ -286,7 +294,7 @@ def osint():
         banner()
         openaiSecurityConsole()
     else:
-        os.system("clear")
+        banner()
         print("Wrong input, try again.")
         osint()
 
@@ -295,9 +303,8 @@ def osint():
 def help():
     print("\nCOMMANDS\tDESCRIPTION\n")
     print("banner\t\tprint banner")
-    print("social\t\tcall social and reverse engineering menu")
+    print("file\t\tcall file menu")
     print("osint\t\tcall osint menu")
-    print("api-key\t\tset OpenAI API to environment")
     print("exit\t\tquit oasc\n")
 
 
@@ -308,12 +315,10 @@ def openaiSecurityConsole():
         # SYSTEM COMMAND HANDLER 
         if interact == "exit":
             exit()
-        elif interact == "social":
-            social()
+        elif interact == "file":
+            file()
         elif interact == "osint":
             osint()
-        elif interact == "api-key":
-            setEnvKey()
         elif interact == "help":
             help()
         elif interact == "banner":
@@ -326,6 +331,8 @@ def openaiSecurityConsole():
 
 # FUNCTION FOR A CALLABLE BANNER
 def banner():
+    os.system("clear")
+
     padding = '  '
     O = [[' ','┌','─','┐'],
 	     [' ','│',' ','│'],
