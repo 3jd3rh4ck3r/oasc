@@ -19,7 +19,7 @@ try:
     from requests.structures import CaseInsensitiveDict
     from censys.search import CensysHosts
 except ModuleNotFoundError:
-    print("[*] installing missing modules")
+    print("[*] checking requirements ...")
     os.system("pip3 install requests")
     os.system("pip3 install openai")
     os.system("pip3 install beautifulsoup4")
