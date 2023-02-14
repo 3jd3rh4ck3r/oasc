@@ -203,16 +203,20 @@ def numlookupRequest(mobilenumber):
 def file():
     print("\nFILE MENU\n")
     print("(1)File Content Analyzer")
-    print("(2)Generate File Template\n")
+    print("(2)Generate File Template")
+    print("(0)Back\n")
     mode = input("[Select Mode]╼> ")    
     if mode == "1":
         analyzer()
     elif mode == "2":
         creator()
+    elif mode == "0":
+        banner()
+        openaiSecurityConsole()
     else:
         banner()
         print("Wrong input, try again.")
-        openaiSecurityConsole()
+        file()
 
 
 # FUNCTION TO LIST OSINT MENU
@@ -290,7 +294,6 @@ def osint():
     elif mode == "8":
         coinHunter()
     elif mode == "0":
-        os.system("clear")
         banner()
         openaiSecurityConsole()
     else:
