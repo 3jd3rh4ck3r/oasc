@@ -51,10 +51,16 @@ MAX_TOKENS = 2048
 """----------------------------------------------------------------"""
 
 
-# FUNCTION TO SET OPEN AI API KEY AS ENVIRONMENT VARIABLE -> It's not working -.-"
-def setEnvKey():
-    token = input("[OpenAI API Key]╼> ")
-    os.system("export OPENAI_API_KEY='"+token+"'")
+# FUNCTION TO EXPORT ENVIRONMENT VARIABLES
+def setEnvKeys():
+    openaitoken = input("[OpenAI API Key]╼> ")
+    os.system("export OPENAI_API_KEY='"+openaitoken+"'")
+    numlookuptoken = input("[Numlookup API Key]╼> ")
+    os.system("export NUMLOOKUP_API_KEY='" + numlookuptoken + "'")
+    cenapitoken = input("[CenSys API Key]╼> ")
+    os.system("export CENSYS_API_KEY='" + cenapitoken + "'")
+    censecrettoken = input("[CenSys Secret Key]╼> ")
+    os.system("export CENSYS_SECRET_KEY='" + censecrettoken + "'")
 
 
 # FUNCTION TO SET FINETUNING FOR OPENAI REQUEST
@@ -102,9 +108,9 @@ def blockchainRequest(network, address):
         balance = float(wallet.final_balance) / 100000000
         inbound = float(wallet.total_received) / 100000000
         outbound = float(wallet.total_sent) / 100000000
-        print("[*| BALANCE:\t" + str(balance) + " BTC")
-        print("[*| RECEIVED:\t" + str(inbound) + " BTC")
-        print("[*| SENT:\t" + str(outbound) + " BTC")
+        print("[*] BALANCE:\t" + str(balance) + " BTC")
+        print("[*] RECEIVED:\t" + str(inbound) + " BTC")
+        print("[*] SENT:\t" + str(outbound) + " BTC")
     elif network == "eth":
         blockchain = 'https://mainnet.infura.io/v3/64e9df670efb49ac9b71f9984f29dccd'
         web3 = Web3(Web3.HTTPProvider(blockchain))
@@ -148,6 +154,7 @@ def oniondump():
     finally:
         tor_process.kill()
 
+
 # FUNCTION FOR A CENSYS API REQUEST
 def censysRequest(query):
     censyshost = CensysHosts(cenapikey,censecret)
@@ -158,6 +165,11 @@ def censysRequest(query):
     export = str(rs)+str(hs)
     exportContent(export, "report-"+query)
 
+
+# FUNCTION TO GENERATE AI IMAGE WITH OPENAI
+def imagine(interact):
+    response = openai.Image.create(prompt=interact, n=1, size="1024x1024")
+    print("\n"+response['data'][0]['url'])
 
 # FUNCTION TO ANALYZE FILE CONTENT
 def analyzer():
@@ -202,14 +214,18 @@ def numlookupRequest(mobilenumber):
 # FUNCTION TO LIST SOCIAL AND REVERSE ENGINEERING MENU
 def file():
     print("\nFILE MENU\n")
-    print("(1)File Content Analyzer")
+    print("(1)Analyze File Content ")
     print("(2)Generate File Template")
+    print("(3)Generate Image")
     print("(0)Back\n")
     mode = input("[Select Mode]╼> ")    
     if mode == "1":
         analyzer()
     elif mode == "2":
         creator()
+    elif mode == "3":
+        interact = input("[Description]╼> ")
+        imagine(interact)
     elif mode == "0":
         banner()
         openaiSecurityConsole()
