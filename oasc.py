@@ -270,7 +270,6 @@ def osint():
         mobilenumber = input("[Mobile Number]╼> ")
         numlookupRequest(mobilenumber)
 
-
     def googleDorking():
         print("\nAdvanced search techniques using Google.\n")
         # THIS IS HOW YOU COULD USE IT FURTHER FROM HERE
