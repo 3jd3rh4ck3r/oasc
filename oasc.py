@@ -110,7 +110,7 @@ def blockchainRequest(network, address):
         outbound = float(wallet.total_sent) / 100000000
         print("\n[*] BALANCE:\t" + str(balance) + " BTC")
         print("[*] RECEIVED:\t" + str(inbound) + " BTC")
-        print("[*] SENT:\t" + str(outbound) + " BTC")
+        print("[*] SENT:\t" + str(outbound) + " BTC\n")
     elif network == "2":
         blockchain = 'https://mainnet.infura.io/v3/64e9df670efb49ac9b71f9984f29dccd'
         web3 = Web3(Web3.HTTPProvider(blockchain))
@@ -352,7 +352,6 @@ def openaiSecurityConsole():
 # FUNCTION FOR A CALLABLE BANNER
 def banner():
     os.system("clear")
-
     padding = '  '
     O = [[' ','┌','─','┐'],
 	     [' ','│',' ','│'],
