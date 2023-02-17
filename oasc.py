@@ -321,6 +321,7 @@ def osint():
 # FUNCTION TO LIST HELP MENU - COULD BE SWAGGED UP ;)
 def help():
     print("\nCOMMANDS\tDESCRIPTION\n")
+    print("help\t\tprint this help menu")
     print("clear\t\tclear screen / refresh banner")
     print("file\t\topenAI file menu")
     print("osint\t\tosint universe")
