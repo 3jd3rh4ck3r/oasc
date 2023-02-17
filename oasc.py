@@ -285,7 +285,7 @@ def osint():
         address = input("[Wallet Address]╼> ")
         if network == "1":
             blockchainRequest("1", address)
-        if network == "2":
+        elif network == "2":
             blockchainRequest("2", address)
         else:
             banner()
