@@ -142,7 +142,7 @@ def googleDorkRequest(query):
     return response.text
 
 
-def oniondump():
+def onionDump():
     # CREATE A TOR PROCESS AND SAVE RESPONSE TO FILE
     tor_process = stem.process.launch_tor_with_config(config={'SocksPort': str(9050), 'ControlPort': str(9051)})
     onionurl = input("[Onion Url]╼> ")
@@ -167,12 +167,13 @@ def censysRequest(query):
 
 
 # FUNCTION TO GENERATE AI IMAGE WITH OPENAI
-def imagine(interact):
+def openaiImageCreator(interact):
     response = openai.Image.create(prompt=interact, n=1, size="1024x1024")
     print("\n"+response['data'][0]['url'])
 
+
 # FUNCTION TO ANALYZE FILE CONTENT
-def analyzer():
+def openaiFileAnalyzer():
     path = input("[File Path]╼> ")
     content = importContent(path)
     prompt = "Describe following file content: " + str(content)
@@ -182,7 +183,7 @@ def analyzer():
 
 
 # FUNCTION TO CREATE FILE TEMPLATE
-def creator():
+def openaiFileCreator():
     data = input("[Describe Content]╼> ")
     path = input("[File Path]╼> ")
     type = "console"
@@ -220,12 +221,12 @@ def file():
     print("(0)Back\n")
     mode = input("[Select Mode]╼> ")    
     if mode == "1":
-        analyzer()
+        openaiFileAnalyzer()
     elif mode == "2":
-        creator()
+        openaiFileCreator()
     elif mode == "3":
         interact = input("[Description]╼> ")
-        imagine(interact)
+        openaiImageCreator(interact)
     elif mode == "0":
         banner()
         openaiSecurityConsole()
@@ -283,9 +284,9 @@ def osint():
         network = input("[Select Network]╼> ")
         address = input("[Wallet Address]╼> ")
         if network == "1":
-            blockchainRequest(network, address)
+            blockchainRequest("1", address)
         if network == "2":
-            blockchainRequest(network, address)
+            blockchainRequest("2", address)
         else:
             banner()
             print("Wrong input, try again.")
