@@ -108,7 +108,7 @@ def blockchainRequest(network, address):
         balance = float(wallet.final_balance) / 100000000
         inbound = float(wallet.total_received) / 100000000
         outbound = float(wallet.total_sent) / 100000000
-        print("[*] BALANCE:\t" + str(balance) + " BTC")
+        print("\n[*] BALANCE:\t" + str(balance) + " BTC")
         print("[*] RECEIVED:\t" + str(inbound) + " BTC")
         print("[*] SENT:\t" + str(outbound) + " BTC")
     elif network == "2":
@@ -280,7 +280,7 @@ def osint():
     def coinHunter():
         print("\nCoin Hunter - Crypto Wallet Tracker\n")
         print("(1)Bitcoin Mainnet")
-        print("(2)Ethereum Mainnet")
+        print("(2)Ethereum Mainnet\n")
         network = input("[Select Network]╼> ")
         address = input("[Wallet Address]╼> ")
         if network == "1":
@@ -329,6 +329,7 @@ def help():
 
 # FUNCTION FOR THE OPENAI QUERY PROMPT (CORE-SYSTEM)
 def openaiSecurityConsole():
+    banner()
     while True:
         interact = input("[OASC]╼> ")
         # SYSTEM COMMAND HANDLER 
@@ -392,6 +393,5 @@ def banner():
 
 # MAIN FUNCTION (ENTRY-POINT)
 if __name__ == "__main__":
-    banner()
     openaiSecurityConsole()
 
