@@ -321,9 +321,9 @@ def osint():
 # FUNCTION TO LIST HELP MENU - COULD BE SWAGGED UP ;)
 def help():
     print("\nCOMMANDS\tDESCRIPTION\n")
-    print("banner\t\tprint banner")
-    print("file\t\tcall file menu")
-    print("osint\t\tcall osint menu")
+    print("clear\t\tclear screen / refresh banner")
+    print("file\t\topenAI file menu")
+    print("osint\t\tosint universe")
     print("exit\t\tquit oasc\n")
 
 
@@ -341,7 +341,7 @@ def openaiSecurityConsole():
             osint()
         elif interact == "help":
             help()
-        elif interact == "banner":
+        elif interact == "clear":
             banner()
         else:
             type = "console"
