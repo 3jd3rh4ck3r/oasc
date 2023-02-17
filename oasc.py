@@ -102,7 +102,7 @@ def torRequest():
 
 # FUNCTION FOR A BLOCKCHAIN REQUEST
 def blockchainRequest(network, address):
-    if network == "btc":
+    if network == "1":
         blockchain = 'https://blockchain.info/rawaddr/' + address
         wallet = pd.read_json(blockchain, lines=True)
         balance = float(wallet.final_balance) / 100000000
@@ -111,7 +111,7 @@ def blockchainRequest(network, address):
         print("[*] BALANCE:\t" + str(balance) + " BTC")
         print("[*] RECEIVED:\t" + str(inbound) + " BTC")
         print("[*] SENT:\t" + str(outbound) + " BTC")
-    elif network == "eth":
+    elif network == "2":
         blockchain = 'https://mainnet.infura.io/v3/64e9df670efb49ac9b71f9984f29dccd'
         web3 = Web3(Web3.HTTPProvider(blockchain))
         if web3.isConnected():
@@ -283,9 +283,9 @@ def osint():
         network = input("[Select Network]╼> ")
         address = input("[Wallet Address]╼> ")
         if network == "1":
-            blockchainRequest("btc", address)
+            blockchainRequest(network, address)
         if network == "2":
-            blockchainRequest("eth", address)
+            blockchainRequest(network, address)
         else:
             banner()
             print("Wrong input, try again.")
