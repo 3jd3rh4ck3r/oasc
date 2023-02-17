@@ -325,6 +325,9 @@ def help():
     print("file\t\topenAI file menu")
     print("osint\t\tosint universe")
     print("exit\t\tquit oasc\n")
+    print("NOTE!")
+    print("Any other input besides the core commands listed above,")
+    print("interacts directly with openAI")
 
 
 # FUNCTION FOR THE OPENAI QUERY PROMPT (CORE-SYSTEM)
