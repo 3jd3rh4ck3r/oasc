@@ -42,10 +42,11 @@ except ModuleNotFoundError:
 
 # GLOBAL VARIABLES
 openai.api_key = "[ENTER YOUR API KEY HERE]"
-numlookupapikey = "[PUT YOUR API KEY HERE]"  # NUMLOOKUPAPI HAS 100 REQUEST PER MONTH FOR FREE
+numlookupapikey = "[PUT YOUR API KEY HERE]"
 cenapikey = "[ENTER YOUR API ID HERE]"
 censecret = "[ENTER YOUR API SECRET HERE]"
-ENGINE = "text-davinci-002"
+# OPENAI ENGINE AND FINETUNE PARAMETERS
+ENGINE = "text-davinci-003"
 TEMPERATURE = 0
 MAX_TOKENS = 2048
 """----------------------------------------------------------------"""
@@ -137,9 +138,21 @@ def openaiRequest(type, interact):
 
 # FUNCTION FOR GOOGLE DORK REQUEST
 def googleDorkRequest(query):
-    params = {'q': query}
-    response = requests.get('https://www.google.com/search', params=params)
-    return response.text
+    url = f"https://www.google.com/search?q={query}"
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'}
+    response = requests.get(url, headers=headers)
+    soup = bs(response.text, 'html.parser')
+    results = []
+    for g in soup.find_all('div', class_='r'):
+        anchors = g.find_all('a')
+        if anchors:
+            link = anchors[0]['href']
+            if 'facebook.com' in link:
+                results.append(link)
+            elif 'linkedin.com' in link:
+                results.append(link)
+    return results
 
 
 def onionDump():
@@ -239,43 +252,63 @@ def file():
 # FUNCTION TO LIST OSINT MENU
 def osint():
     print("\nOSINT MENU\n")
-    print("(1)Reconnaissance")
-    print("(2)Enumeration")
-    print("(3)Email Search")
-    print("(4)Username Search")
-    print("(5)People Search")
-    print("(6)Phone Number")
-    print("(7)Google Dorking")
-    print("(8)Coin Hunter")
+    print("(1)Host Reconnaissance")
+    print("(2)People Reconnaissance")
+    print("(3)Phone Number Lookup")
+    print("(4)Crypto Wallet Tracker")
     print("(0)Back\n")
 
-    def reconnaissance():
+    def hostReconnaissance():
         print("\nScanning target with censys search\n")
         query = input("[Domain]╼> ")
         censysRequest(query)
-        
-    def enumeration():
-        print("\nGathering data through active connections.\n")
 
-    def emailSearch():
-        print("\nSearching for email addresses.\n")
-        
-    def usernameSearch():
-        print("\nSearching for usernames.\n")
-    
-    def peopleSearch():
-        print("\nSearching for information about individuals.\n")
-    
+    def peopleReconnaissance():
+        print("\nPEOPLE RECONNAISSANCE\n")
+        print("(1)E-Mail Search")
+        print("(2)Username Search")
+        print("(3)Name Search")
+        print("(0)Back\n")
+
+        def emailSearch():
+            print("\nSearching for email addresses.\n")
+
+        def usernameSearch():
+            print("\nSearching for username.\n")
+            # MAYBE IMPLEMENT SHERLOCK HERE?
+
+        def nameSearch(fullname):
+            print("\nSearching for information about individuals.\n")
+            facebook = googleDorkRequest('"'+fullname+'" site:facebook.com')
+            linkedin = googleDorkRequest('"'+fullname+'" site:linkedin.com')
+            print("\nFacebook:\n")
+            print(facebook[:5]) # RETURNS EMPTY?! GUESS GOOGLE IS BLOCKING SCRAPING
+            # ALTERNATIVE DIRECT SYSTEM CALL FOR MAC
+            os.system('open -a "Google Chrome" "https://www.google.com/search?q='+fullname+' site:facebook.com"')
+            print("\nLinkedIn:\n")
+            print(linkedin[:5]) # RETURNS EMPTY?! GUESS GOOGLE IS BLOCKING SCRAPING
+            # ALTERNATIVE DIRECT SYSTEM CALL FOR MAC
+            os.system('open -a "Google Chrome" "https://www.google.com/search?q='+fullname+' site:linkedin.com"')
+
+        mode = input("[Select Mode]╼> ")
+        if mode == "1":
+            emailSearch()
+        elif mode == "2":
+            usernameSearch()
+        elif mode == "3":
+            fullname = input("[Full Name]╼> ")
+            nameSearch(fullname)
+        elif mode == "0":
+            openaiSecurityConsole()
+        else:
+            banner()
+            print("Wrong input, try again.")
+            peopleReconnaissance()
+
     def phoneNumber():
         print("\nSearching for phone number information.\n")
         mobilenumber = input("[Mobile Number]╼> ")
         numlookupRequest(mobilenumber)
-
-    def googleDorking():
-        print("\nAdvanced search techniques using Google.\n")
-        # THIS IS HOW YOU COULD USE IT FURTHER FROM HERE
-        results = googleDorkRequest("inurl:login site:tiktok.com")  # OPERATORS MIGHT BE SET DIFFERENT OR EXTENDED
-        exportContent(results, "dork-report.html")  # SAVE RESPONSE
 
     def coinHunter():
         print("\nCoin Hunter - Crypto Wallet Tracker\n")
@@ -294,23 +327,14 @@ def osint():
 
     mode = input("[Select Mode]╼> ")
     if mode == "1":
-        reconnaissance()
+        hostReconnaissance()
     elif mode == "2":
-        enumeration()
+        peopleReconnaissance()
     elif mode == "3":
-        emailSearch()
-    elif mode == "4":
-        usernameSearch()
-    elif mode == "5":
-        peopleSearch()
-    elif mode == "6":
         phoneNumber()
-    elif mode == "7":
-        googleDorking()
-    elif mode == "8":
+    elif mode == "4":
         coinHunter()
     elif mode == "0":
-        banner()
         openaiSecurityConsole()
     else:
         banner()
