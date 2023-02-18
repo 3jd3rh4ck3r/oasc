@@ -278,7 +278,7 @@ def osint():
             # MAYBE IMPLEMENT SHERLOCK HERE?
 
         def nameSearch(fullname):
-            print("\nSearching for information about individuals.\n")
+            print("\nSearching information for "+fullname+"\n")
             facebook = googleDorkRequest('"'+fullname+'" site:facebook.com')
             linkedin = googleDorkRequest('"'+fullname+'" site:linkedin.com')
             print("\nFacebook:\n")
