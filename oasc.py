@@ -49,6 +49,8 @@ censecret = "[ENTER YOUR API SECRET HERE]"
 ENGINE = "text-davinci-003"
 TEMPERATURE = 0
 MAX_TOKENS = 2048
+# THIRD PARTY TOOLS
+sherlockpath = "/home/z0nd3rl1ng/Tools/sherlock/sherlock"
 """----------------------------------------------------------------"""
 
 
@@ -136,25 +138,7 @@ def openaiRequest(type, interact):
         return response
 
 
-# FUNCTION FOR GOOGLE DORK REQUEST
-def googleDorkRequest(query):
-    url = f"https://www.google.com/search?q={query}"
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'}
-    response = requests.get(url, headers=headers)
-    soup = bs(response.text, 'html.parser')
-    results = []
-    for g in soup.find_all('div', class_='r'):
-        anchors = g.find_all('a')
-        if anchors:
-            link = anchors[0]['href']
-            if 'facebook.com' in link:
-                results.append(link)
-            elif 'linkedin.com' in link:
-                results.append(link)
-    return results
-
-
+# FUNCTION TO DUMP AN ONION SITE
 def onionDump():
     # CREATE A TOR PROCESS AND SAVE RESPONSE TO FILE
     tor_process = stem.process.launch_tor_with_config(config={'SocksPort': str(9050), 'ControlPort': str(9051)})
@@ -227,6 +211,7 @@ def numlookupRequest(mobilenumber):
 
 # FUNCTION TO LIST SOCIAL AND REVERSE ENGINEERING MENU
 def file():
+    banner()
     print("\nFILE MENU\n")
     print("(1)Analyze File Content ")
     print("(2)Generate File Template")
@@ -241,16 +226,15 @@ def file():
         interact = input("[Description]╼> ")
         openaiImageCreator(interact)
     elif mode == "0":
-        banner()
         openaiSecurityConsole()
     else:
-        banner()
-        print("Wrong input, try again.")
         file()
+        print("Wrong input, try again.")
 
 
 # FUNCTION TO LIST OSINT MENU
 def osint():
+    banner()
     print("\nOSINT MENU\n")
     print("(1)Host Reconnaissance")
     print("(2)People Reconnaissance")
@@ -270,38 +254,36 @@ def osint():
         print("(3)Name Search")
         print("(0)Back\n")
 
-        def emailSearch():
-            print("\nSearching for email addresses.\n")
+        def emailSearch(email):
+            print("\nSearching information for "+email+"\n")
+            os.system('open -a "Google Chrome" "https://www.google.com/search?q=allintext:'+email)
+            os.system('open -a "Google Chrome" "https://www.google.com/search?q=intitle:'+email)
+            os.system('open -a "Google Chrome" "https://www.google.com/search?q=inurl:'+email)
 
-        def usernameSearch():
-            print("\nSearching for username.\n")
-            # MAYBE IMPLEMENT SHERLOCK HERE?
+        def usernameSearch(username):
+            print("\nSearching for "+username+"\n")
+            os.system('python3 '+sherlockpath+' '+username)
 
         def nameSearch(fullname):
             print("\nSearching information for "+fullname+"\n")
-            facebook = googleDorkRequest('"'+fullname+'" site:facebook.com')
-            linkedin = googleDorkRequest('"'+fullname+'" site:linkedin.com')
             print("\nFacebook:\n")
-            print(facebook[:5]) # RETURNS EMPTY?! GUESS GOOGLE IS BLOCKING SCRAPING
-            # ALTERNATIVE DIRECT SYSTEM CALL FOR MAC
             os.system('open -a "Google Chrome" "https://www.google.com/search?q='+fullname+' site:facebook.com"')
             print("\nLinkedIn:\n")
-            print(linkedin[:5]) # RETURNS EMPTY?! GUESS GOOGLE IS BLOCKING SCRAPING
-            # ALTERNATIVE DIRECT SYSTEM CALL FOR MAC
             os.system('open -a "Google Chrome" "https://www.google.com/search?q='+fullname+' site:linkedin.com"')
 
         mode = input("[Select Mode]╼> ")
         if mode == "1":
-            emailSearch()
+            email = input("[E-Mail]╼> ")
+            emailSearch(email)
         elif mode == "2":
-            usernameSearch()
+            username = input("[Username]╼> ")
+            usernameSearch(username)
         elif mode == "3":
             fullname = input("[Full Name]╼> ")
             nameSearch(fullname)
         elif mode == "0":
-            openaiSecurityConsole()
+            osint()
         else:
-            banner()
             print("Wrong input, try again.")
             peopleReconnaissance()
 
@@ -313,17 +295,19 @@ def osint():
     def coinHunter():
         print("\nCoin Hunter - Crypto Wallet Tracker\n")
         print("(1)Bitcoin Mainnet")
-        print("(2)Ethereum Mainnet\n")
+        print("(2)Ethereum Mainnet")
+        print("(0)Back\n")
         network = input("[Select Network]╼> ")
         address = input("[Wallet Address]╼> ")
         if network == "1":
             blockchainRequest("1", address)
         elif network == "2":
             blockchainRequest("2", address)
-        else:
-            banner()
-            print("Wrong input, try again.")
+        elif network == "0":
             osint()
+        else:
+            print("Wrong input, try again.")
+            coinHunter()
 
     mode = input("[Select Mode]╼> ")
     if mode == "1":
@@ -337,9 +321,8 @@ def osint():
     elif mode == "0":
         openaiSecurityConsole()
     else:
-        banner()
-        print("Wrong input, try again.")
         osint()
+        print("Wrong input, try again.")
 
 
 # FUNCTION TO LIST HELP MENU - COULD BE SWAGGED UP ;)
