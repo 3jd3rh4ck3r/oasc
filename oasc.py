@@ -257,8 +257,6 @@ def osint():
         def emailSearch(email):
             print("\nSearching information for "+email+"\n")
             os.system('open -a "Google Chrome" "https://www.google.com/search?q=allintext:'+email+'"')
-            os.system('open -a "Google Chrome" "https://www.google.com/search?q=intitle:'+email+'"')
-            os.system('open -a "Google Chrome" "https://www.google.com/search?q=inurl:'+email+'"')
 
         def usernameSearch(username):
             print("\nSearching for "+username+"\n")
