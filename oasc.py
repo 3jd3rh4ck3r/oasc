@@ -296,10 +296,11 @@ def osint():
         print("(2)Ethereum Mainnet")
         print("(0)Back\n")
         network = input("[Select Network]╼> ")
-        address = input("[Wallet Address]╼> ")
         if network == "1":
+            address = input("[Wallet Address]╼> ")
             blockchainRequest("1", address)
         elif network == "2":
+            address = input("[Wallet Address]╼> ")
             blockchainRequest("2", address)
         elif network == "0":
             osint()
