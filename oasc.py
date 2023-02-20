@@ -19,7 +19,7 @@ try:
     from requests.structures import CaseInsensitiveDict
     from censys.search import CensysHosts
 except ModuleNotFoundError:
-    print("[*] checking requirements ...")
+    print("[*] searching required modules ...")
     os.system("pip3 install requests")
     os.system("pip3 install openai")
     os.system("pip3 install beautifulsoup4")
@@ -96,11 +96,20 @@ def importContent(path):
 
 
 # FUNCTION FOR TOR NETWORK REQUEST
-def torRequest():
-    # SET TOR AS PROXY
-    session = requests.session()
-    session.proxies = {'http':  'socks5://127.0.0.1:9050', 'https': 'socks5://127.0.0.1:9050'}
-    return session
+def torRequest(onionurl,path):
+    def proxySession():
+        # SET TOR AS PROXY
+        session = requests.session()
+        session.proxies = {'http':  'socks5://127.0.0.1:9050', 'https': 'socks5://127.0.0.1:9050'}
+        return session
+
+    tor_process = stem.process.launch_tor_with_config(config={'SocksPort': str(9050), 'ControlPort': str(9051)})
+    try:
+        request = proxySession()
+        response = request.get(onionurl)
+        exportContent(response, path)
+    finally:
+        tor_process.kill()
 
 
 # FUNCTION FOR A BLOCKCHAIN REQUEST
@@ -136,20 +145,6 @@ def openaiRequest(type, interact):
         )
         response = response["choices"][0]["text"]
         return response
-
-
-# FUNCTION TO DUMP AN ONION SITE
-def onionDump():
-    # CREATE A TOR PROCESS AND SAVE RESPONSE TO FILE
-    tor_process = stem.process.launch_tor_with_config(config={'SocksPort': str(9050), 'ControlPort': str(9051)})
-    onionurl = input("[Onion Url]╼> ")
-    path = input("[File Path]╼> ")
-    try:
-        request = torRequest()
-        response = request.get(onionurl)
-        exportContent(response, path)
-    finally:
-        tor_process.kill()
 
 
 # FUNCTION FOR A CENSYS API REQUEST
@@ -216,6 +211,7 @@ def file():
     print("(1)Analyze File Content ")
     print("(2)Generate File Template")
     print("(3)Generate Image")
+    print("(4)Dump Onion Site")
     print("(0)Back\n")
     mode = input("[Select Mode]╼> ")    
     if mode == "1":
@@ -225,6 +221,10 @@ def file():
     elif mode == "3":
         interact = input("[Description]╼> ")
         openaiImageCreator(interact)
+    elif mode == "4":
+        onionurl = input("[Onion Url]╼> ")
+        path = input("[File Path]╼> ")
+        torRequest(onionurl,path)
     elif mode == "0":
         openaiSecurityConsole()
     else:
