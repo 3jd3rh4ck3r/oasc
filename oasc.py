@@ -50,7 +50,9 @@ ENGINE = "text-davinci-003"
 TEMPERATURE = 0
 MAX_TOKENS = 2048
 # THIRD PARTY TOOLS
-sherlockpath = "/home/z0nd3rl1ng/Tools/sherlock/sherlock"
+sherlock = "/home/z0nd3rl1ng/Tools/sherlock/sherlock"
+exiftool = "exiftool"
+torghost = "/home/z0nd3rl1ng/Tools/torghost.py"
 """----------------------------------------------------------------"""
 
 
@@ -232,6 +234,43 @@ def file():
         print("Wrong input, try again.")
 
 
+# FUNCTION TO LIST OPSEC MENU
+def opsec():
+    banner()
+    print("\nOPSEC MENU\n")
+    print("(1)Redirect traffic through tor")
+    print("(2)Delete picture meta-data ")
+    print("(0)Back\n")
+
+    def startTorghost():
+        os.system("sudo python3 "+torghost+" -s")
+        bg = input("[Background(Y/n)]╼> ")
+        if bg == "y":
+            openaiSecurityConsole()
+        elif bg == "Y":
+            openaiSecurityConsole()
+        else:
+            stopTorghost()
+
+    def stopTorghost():
+        os.system("sudo python3 "+torghost+" -x")
+
+    def deleteExif(folder):
+        os.system(exiftool+" -all= "+folder)
+
+    mode = input("[Select Mode]╼> ")
+    if mode == "1":
+        startTorghost()
+    elif mode == "2":
+        folder = input("[Path]╼> ")
+        deleteExif(folder)
+    elif mode == "0":
+        openaiSecurityConsole()
+    else:
+        print("Wrong input, try again.")
+        opsec()
+
+
 # FUNCTION TO LIST OSINT MENU
 def osint():
     banner()
@@ -240,6 +279,7 @@ def osint():
     print("(2)People Reconnaissance")
     print("(3)Phone Number Lookup")
     print("(4)Crypto Wallet Tracker")
+    print("(5)List Meta Data")
     print("(0)Back\n")
 
     def hostReconnaissance():
@@ -260,7 +300,7 @@ def osint():
 
         def usernameSearch(username):
             print("\nSearching for "+username+"\n")
-            os.system('python3 '+sherlockpath+' '+username)
+            os.system('python3 '+sherlock+' '+username)
 
         def nameSearch(fullname):
             print("\nSearching information for "+fullname+"\n")
@@ -308,6 +348,9 @@ def osint():
             print("Wrong input, try again.")
             coinHunter()
 
+    def listExif(folder):
+        os.system(exiftool +" "+folder)
+
     mode = input("[Select Mode]╼> ")
     if mode == "1":
         hostReconnaissance()
@@ -317,6 +360,9 @@ def osint():
         phoneNumber()
     elif mode == "4":
         coinHunter()
+    elif mode == "5":
+        folder = input("[Path]╼> ")
+        listExif(folder)
     elif mode == "0":
         openaiSecurityConsole()
     else:
@@ -329,8 +375,9 @@ def help():
     print("\nCOMMANDS\tDESCRIPTION\n")
     print("help\t\tprint this help menu")
     print("clear\t\tclear screen / refresh banner")
-    print("file\t\topenAI file menu")
-    print("osint\t\tosint universe")
+    print("file\t\tai content analyzer and creator")
+    print("osint\t\topen source intelligence and reconnaissance")
+    print("opsec\t\toperation security")
     print("exit\t\tquit oasc\n")
     print("input besides the core commands listed above,")
     print("interacts directly with openAI\n")
@@ -348,6 +395,8 @@ def openaiSecurityConsole():
             file()
         elif interact == "osint":
             osint()
+        elif interact == "opsec":
+            opsec()
         elif interact == "help":
             help()
         elif interact == "clear":
