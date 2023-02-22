@@ -376,7 +376,7 @@ def help():
     print("help\t\tprint this help menu")
     print("clear\t\tclear screen / refresh banner")
     print("file\t\tai content analyzer and creator")
-    print("osint\t\topen source intelligence and reconnaissance")
+    print("osint\t\topen source intelligence")
     print("opsec\t\toperation security")
     print("exit\t\tquit oasc\n")
     print("input besides the core commands listed above,")
