@@ -298,9 +298,9 @@ def osint():
         print("(3)Name Search")
         print("(0)Back\n")
 
-        def emailSearch(email):
-            print("\nSearching information for "+email+"\n")
-            os.system('open -a "Google Chrome" "https://www.google.com/search?q=allintext:'+email+'"')
+        def generalSearch(query):
+            print("\nSearching information for "+query+"\n")
+            os.system('open -a "Google Chrome" "https://www.google.com/search?q=allintext:'+query+'"')
 
         def usernameSearch(username):
             print("\nSearching for "+username+"\n")
@@ -315,8 +315,8 @@ def osint():
 
         mode = input("[Select Mode]╼> ")
         if mode == "1":
-            email = input("[Search Query]╼> ")
-            emailSearch(email)
+            query = input("[Search Query]╼> ")
+            generalSearch(query)
         elif mode == "2":
             username = input("[Username]╼> ")
             usernameSearch(username)
