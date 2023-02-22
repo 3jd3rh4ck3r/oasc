@@ -228,6 +228,7 @@ def file():
         path = input("[File Path]╼> ")
         torRequest(onionurl,path)
     elif mode == "0":
+        banner()
         openaiSecurityConsole()
     else:
         file()
@@ -246,8 +247,10 @@ def opsec():
         os.system("sudo python3 "+torghost+" -s")
         bg = input("[Background(Y/n)]╼> ")
         if bg == "y":
+            banner()
             openaiSecurityConsole()
         elif bg == "Y":
+            banner()
             openaiSecurityConsole()
         else:
             stopTorghost()
@@ -265,6 +268,7 @@ def opsec():
         folder = input("[Path]╼> ")
         deleteExif(folder)
     elif mode == "0":
+        banner()
         openaiSecurityConsole()
     else:
         print("Wrong input, try again.")
@@ -364,6 +368,7 @@ def osint():
         folder = input("[Path]╼> ")
         listExif(folder)
     elif mode == "0":
+        banner()
         openaiSecurityConsole()
     else:
         osint()
@@ -385,7 +390,6 @@ def help():
 
 # FUNCTION FOR THE OPENAI QUERY PROMPT (CORE-SYSTEM)
 def openaiSecurityConsole():
-    banner()
     while True:
         interact = input("[OASC]╼> ")
         # SYSTEM COMMAND HANDLER 
@@ -450,5 +454,7 @@ def banner():
 
 # MAIN FUNCTION (ENTRY-POINT)
 if __name__ == "__main__":
+    banner()
+    help()
     openaiSecurityConsole()
 
