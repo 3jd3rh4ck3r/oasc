@@ -238,8 +238,8 @@ def file():
 def opsec():
     banner()
     print("\nOPSEC MENU\n")
-    print("(1)Redirect traffic through tor")
-    print("(2)Delete picture meta-data ")
+    print("(1)Redirect Traffic TorGhost")
+    print("(2)Delete Meta Data ")
     print("(0)Back\n")
 
     def startTorghost():
