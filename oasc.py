@@ -293,7 +293,7 @@ def osint():
 
     def peopleReconnaissance():
         print("\nPEOPLE RECONNAISSANCE\n")
-        print("(1)E-Mail Search")
+        print("(1)General Search")
         print("(2)Username Search")
         print("(3)Name Search")
         print("(0)Back\n")
@@ -315,7 +315,7 @@ def osint():
 
         mode = input("[Select Mode]╼> ")
         if mode == "1":
-            email = input("[E-Mail]╼> ")
+            email = input("[Search Query]╼> ")
             emailSearch(email)
         elif mode == "2":
             username = input("[Username]╼> ")
