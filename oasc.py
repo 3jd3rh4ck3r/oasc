@@ -384,8 +384,7 @@ def help():
     print("osint\t\topen source intelligence")
     print("opsec\t\toperation security")
     print("exit\t\tquit oasc\n")
-    print("input besides the core commands listed above,")
-    print("interacts directly with openAI\n")
+    print("other inputs interact directly with openAI\n")
 
 
 # FUNCTION FOR THE OPENAI QUERY PROMPT (CORE-SYSTEM)
