@@ -8,7 +8,7 @@ __version__ = "0.0.1"
 
 # MODULE REQUIREMENT CHECK
 try:
-    import random, os, json
+    import random, os, json, hashlib, time
     import openai, requests
     import pandas as pd
     from bs4 import BeautifulSoup as bs
@@ -28,7 +28,8 @@ except ModuleNotFoundError:
     os.system("pip3 install web3")
     os.system("pip3 install censys")
     os.system("pip3 install stem")
-    import random, os, json
+    os.system("pip3 install hashlib")
+    import random, os, json, hashlib, time
     import openai, requests
     import pandas as pd
     from bs4 import BeautifulSoup as bs
@@ -45,6 +46,7 @@ openai.api_key = "[ENTER YOUR API KEY HERE]"
 numlookupapikey = "[PUT YOUR API KEY HERE]"
 cenapikey = "[ENTER YOUR API ID HERE]"
 censecret = "[ENTER YOUR API SECRET HERE]"
+virustotalapikey = "[ENTER YOUR API SECRET HERE]"
 # OPENAI ENGINE AND FINETUNE PARAMETERS
 ENGINE = "text-davinci-003"
 TEMPERATURE = 0
@@ -135,7 +137,7 @@ def blockchainRequest(network, address):
         print(network+" is not supported yet!")
 
 
-# FUNCTION FOR AN OPENAI REQUEST
+# FUNCTION FOR OPENAI REQUEST
 def openaiRequest(type, interact):
     if type == "console":
         response = openai.Completion.create(
@@ -240,7 +242,8 @@ def opsec():
     banner()
     print("\nOPSEC MENU\n")
     print("(1)Redirect Traffic TorGhost")
-    print("(2)Delete Meta Data ")
+    print("(2)Delete Meta Data")
+    print("(3)Virustotal Scan")
     print("(0)Back\n")
 
     def startTorghost():
@@ -260,6 +263,17 @@ def opsec():
 
     def deleteExif(folder):
         os.system(exiftool+" -all= "+folder)
+    
+    def virustotalScan(filepath):
+        endpoint = 'https://www.virustotal.com/vtapi/v2/file/report'
+        params = {'apikey': virustotalapikey, 'resource': hashlib.md5(open(filepath, 'rb').read()).hexdigest()}
+        response = requests.get(endpoint, params=params)
+        while response.json().get('response_code') == 0:
+            print("running scan. report not ready yet, waiting 60 seconds...")
+            time.sleep(60)
+            response = requests.get(endpoint, params=params)
+            print(response.json())
+        return response.json()
 
     mode = input("[Select Mode]╼> ")
     if mode == "1":
@@ -267,6 +281,10 @@ def opsec():
     elif mode == "2":
         folder = input("[Path]╼> ")
         deleteExif(folder)
+    elif mode == "3":
+        filepath = input("[Path]╼> ")
+        report = virustotalScan(filepath)
+        print(report)
     elif mode == "0":
         banner()
         openaiSecurityConsole()
