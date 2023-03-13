@@ -43,7 +43,7 @@ except ModuleNotFoundError:
 
 # GLOBAL VARIABLES
 openai.api_key = "[ENTER YOUR API KEY HERE]"
-numlookupapikey = "[PUT YOUR API KEY HERE]"
+numlookupapikey = "[ENTER YOUR API KEY HERE]"
 cenapikey = "[ENTER YOUR API ID HERE]"
 censecret = "[ENTER YOUR API SECRET HERE]"
 virustotalapikey = "[ENTER YOUR API SECRET HERE]"
