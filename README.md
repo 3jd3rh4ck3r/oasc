@@ -3,10 +3,8 @@
 <h2>AI-powered Cybersecurity Framework</h2>
 
 <h3>Requirements</h3>
-<img src="settings.png" width="100%"/>
-
-
-
-
-<ul><li><h3><a href="https://z0nd3rl1ng.atlassian.net/jira/software/c/projects/OASC/boards/1?selectedIssue=OASC-1&atlOrigin=eyJpIjoiNjEzZTVmMTRhOWM5NDFlMGE4Yjc3NGE4MDIwNGI1NDUiLCJwIjoiaiJ9">Atlassian Kanban Board 📋</a></h3></li></ul>
-
+<br>
+<p>
+  Enter your API keys for all third party services and set the paths after installing <a href="https://exiftool.org/">exiftool</a>, <a href="https://github.com/sherlock-project/sherlock">sherlock</a> and <a href="https://github.com/SusmithKrishnan/torghost">torghost</a>
+</p>
+<img src="settings.png" width="50%"/>
