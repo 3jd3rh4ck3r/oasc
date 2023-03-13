@@ -390,7 +390,7 @@ def osint():
             if response.ok:
                 for entry in response.json()["results"]:
                     print(str(entry)+"\n")
-                    print(str("https://www.google.de/maps/@"+str(entry["trilat"])+","+str(entry["trilong"])+",20z")+"\n")
+                    print("https://www.google.de/maps/@"+str(entry["trilat"])+","+str(entry["trilong"])+",20z"+"\n")
             else:
                 print(response.raise_for_status())
         elif mode == "2":
@@ -401,7 +401,7 @@ def osint():
             if response.ok:
                 for entry in response.json()["results"]:
                     print(str(entry)+"\n")
-                    print(str("https://www.google.de/maps/@"+str(entry["trilat"])+","+str(entry["trilong"])+",20z")+"\n")
+                    print("https://www.google.de/maps/@"+str(entry["trilat"])+","+str(entry["trilong"])+",20z"+"\n")
             else:
                 print(response.raise_for_status())
         elif mode == "3":
