@@ -47,6 +47,7 @@ numlookupapikey = "[PUT YOUR API KEY HERE]"
 cenapikey = "[ENTER YOUR API ID HERE]"
 censecret = "[ENTER YOUR API SECRET HERE]"
 virustotalapikey = "[ENTER YOUR API SECRET HERE]"
+wigleapienc = "[ENTER YOUR ENCODED API HERE]"
 # OPENAI ENGINE AND FINETUNE PARAMETERS
 ENGINE = "text-davinci-003"
 TEMPERATURE = 0
@@ -302,6 +303,7 @@ def osint():
     print("(3)Phone Number Lookup")
     print("(4)Crypto Wallet Tracker")
     print("(5)List Meta Data")
+    print("(6)Access Point Tracker")
     print("(0)Back\n")
 
     def hostReconnaissance():
@@ -373,6 +375,49 @@ def osint():
     def listExif(folder):
         os.system(exiftool +" "+folder)
 
+    def apTracker():
+        print("\nAccess-Point Tracker - WiGLE\n")
+        print("(1)SSID")
+        print("(2)BSSID/MAC")
+        print("(3)LOCATION")
+        print("(0)Back\n")
+        mode = input("[Select Mode]╼> ")
+        if mode ==  "1":
+            ssid = input("[SSID]╼> ")
+            url = f"https://api.wigle.net/api/v2/network/search?onlymine=false&ssid={ssid}"
+            headers = {"Authorization": f"Basic {wigleapienc}"}
+            response = requests.get(url, headers=headers)
+            if response.ok:
+                print(response.json()["results"])
+                print("https://www.google.com/maps/@"+response.json()["results"]["trilat"]+","+response.json()["results"]["trilong"])
+            else:
+                print(response.raise_for_status())
+        elif mode == "2":
+            bssid = input("[BSSID]╼> ")
+            url = f"https://api.wigle.net/api/v2/network/detail?netid={bssid}"
+            headers = {"Authorization": f"Basic {wigleapienc}"}
+            response = requests.get(url, headers=headers)
+            if response.ok:
+                print(response.json()["results"])
+                print("https://www.google.com/maps/@"+response.json()["results"]["trilat"]+","+response.json()["results"]["trilong"])
+            else:
+                print(response.raise_for_status())
+        elif mode == "3":
+            latitude = input("[LATITUDE]╼> ")
+            longitude = input("[LONGITUDE]╼> ")
+            url = f"https://api.wigle.net/api/v2/network/search?onlymine=false&latrange1={latitude}&latrange2={latitude}&longrange1={longitude}&longrange2={longitude}"
+            headers = {"Authorization": f"Basic {wigleapienc}"}
+            response = requests.get(url, headers=headers)
+            if response.ok:
+                print(response.json()["results"])
+                print("https://www.google.com/maps/@"+response.json()["results"]["trilat"]+","+response.json()["results"]["trilong"])
+            else:
+                print(response.raise_for_status())
+        else:
+            osint()
+
+
+
     mode = input("[Select Mode]╼> ")
     if mode == "1":
         hostReconnaissance()
@@ -385,6 +430,8 @@ def osint():
     elif mode == "5":
         folder = input("[Path]╼> ")
         listExif(folder)
+    elif mode == "6":
+        apTracker()
     elif mode == "0":
         banner()
         openaiSecurityConsole()
