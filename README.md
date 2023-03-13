@@ -11,7 +11,7 @@
     <li><a href="https://github.com/sherlock-project/sherlock">sherlock</a></li>
     <li><a href="https://github.com/SusmithKrishnan/torghost">torghost</a></li>
 </p>
-<img src="settings.png" width="100%"/>
+<img src="settings.png" width="40%"/>
 
 
 
