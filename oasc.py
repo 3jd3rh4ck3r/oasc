@@ -47,7 +47,7 @@ numlookupapikey = "[ENTER YOUR API KEY HERE]"
 cenapikey = "[ENTER YOUR API ID HERE]"
 censecret = "[ENTER YOUR API SECRET HERE]"
 virustotalapikey = "[ENTER YOUR API SECRET HERE]"
-wigleapienc = "[ENTER YOUR ENCODED API HERE]"
+wigleapienc = "QUlEOWU2MWVmOGMzNmM0ZjkwNDQ3NGFmMDA1MjAwYzMyNWQ6Y2NkYjc2OTI4ZTQzNzRkYzRkOGMzNWIwNmJjM2M4NGQ="
 # OPENAI ENGINE AND FINETUNE PARAMETERS
 ENGINE = "text-davinci-003"
 TEMPERATURE = 0
@@ -390,7 +390,7 @@ def osint():
             if response.ok:
                 for entry in response.json()["results"]:
                     print(str(entry)+"\n")
-                    print("https://www.google.de/maps/@"+str(entry["trilat"])+","+str(entry["trilong"])+",20z"+"\n")
+                    print("https://www.google.de/maps/@"+str(entry["trilat"])+","+str(entry["trilong"])+",20z")
             else:
                 print(response.raise_for_status())
         elif mode == "2":
@@ -401,7 +401,7 @@ def osint():
             if response.ok:
                 for entry in response.json()["results"]:
                     print(str(entry)+"\n")
-                    print("https://www.google.de/maps/@"+str(entry["trilat"])+","+str(entry["trilong"])+",20z"+"\n")
+                    print("https://www.google.de/maps/@"+str(entry["trilat"])+","+str(entry["trilong"])+",20z")
             else:
                 print(response.raise_for_status())
         elif mode == "3":
